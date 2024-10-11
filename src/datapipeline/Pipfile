@@ -9,6 +9,8 @@ verify_ssl = true
 pandas = "*"
 tqdm = "*"
 google-cloud-storage = "*"
+fsspec = "*"
+huggingface_hub = "*"
 
 [requires]
 python_version = "3.11"
