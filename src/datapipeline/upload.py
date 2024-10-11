@@ -48,5 +48,3 @@ upload_to_gcs(
 )
 print("finish validation upload")
 print("finish the process")
-
-

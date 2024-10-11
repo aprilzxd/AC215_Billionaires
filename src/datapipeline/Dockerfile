@@ -1,4 +1,3 @@
-
 FROM python:3.11-slim
 
 ENV PYENV_SHELL=/bin/bash

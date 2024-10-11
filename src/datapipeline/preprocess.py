@@ -2,7 +2,6 @@ import pandas as pd
 import json
 from tqdm import tqdm
 
-
 # load from local
 file_path = "dataset/top.jsonl"
 
