@@ -19,7 +19,7 @@ def upload_to_gcs(bucket_name, source_file_name, destination_blob_name, chunk_si
             try:
                 blob.upload_from_file(file_obj, size=len(chunk), rewind=True)
             except:
-                time.sleep(30)
+                time.sleep(5)
                 blob.upload_from_file(file_obj, size=len(chunk), rewind=True)
             pbar.update(len(chunk))
             
@@ -29,21 +29,21 @@ bucket_name = 'ac215-reddit-finance-data'
 print("start uploading")
 upload_to_gcs(
     bucket_name=bucket_name,
-    source_file_name='data/top.jsonl',
+    source_file_name='dataset/top.jsonl',
     destination_blob_name='reddit-raw/top.jsonl'
 )
 print("finish raw upload")
 
 upload_to_gcs(
     bucket_name=bucket_name,
-    source_file_name='data/train.jsonl',
+    source_file_name='dataset/train.jsonl',
     destination_blob_name='reddit-processed/train/train.jsonl'
 )
 print("finish train upload")
 
 upload_to_gcs(
     bucket_name=bucket_name,
-    source_file_name='data/validation.jsonl',
+    source_file_name='dataset/validation.jsonl',
     destination_blob_name='reddit-processed/validation/validation.jsonl'
 )
 print("finish validation upload")
