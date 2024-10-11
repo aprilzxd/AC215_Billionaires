@@ -4,7 +4,7 @@ from tqdm import tqdm
 
 
 # load from local
-file_path = "data/top.jsonl"
+file_path = "dataset/top.jsonl"
 
 data = []
 with open(file_path, "r") as f:
@@ -21,8 +21,8 @@ df = pd.DataFrame(df)
 train_df = df.sample(frac=0.8, random_state=42)
 validation_df = df.drop(train_df.index)
 
-train_path = "data/train.jsonl"
-validation_path = "data/validation.jsonl"
+train_path = "dataset/train.jsonl"
+validation_path = "dataset/validation.jsonl"
 
 train_df.to_json(train_path, orient="records", lines=True)
 validation_df.to_json(validation_path, orient="records", lines=True)
