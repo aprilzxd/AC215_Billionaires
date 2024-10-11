@@ -1,52 +1,41 @@
 from google.cloud import storage
-from tqdm import tqdm
-import os
-import time
 
 storage_client = storage.Client()
 
-def upload_to_gcs(bucket_name, source_file_name, destination_blob_name, chunk_size=1024*1024):
-    file_size = os.path.getsize(source_file_name)
-    
+
+def upload_to_gcs(
+    bucket_name,
+    source_file_path,
+    destination_blob_name,
+    credentials_file="../secrets/data-service-account.json",
+):
+    storage_client = storage.Client.from_service_account_json(credentials_file)
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
-    
-    with open(source_file_name, 'rb') as file_obj, tqdm(total=file_size, unit='B', unit_scale=True, desc=source_file_name) as pbar:
-        while True:
-            chunk = file_obj.read(chunk_size)
-            if not chunk:
-                break
-            try:
-                blob.upload_from_file(file_obj, size=len(chunk), rewind=True)
-            except:
-                time.sleep(5)
-                blob.upload_from_file(file_obj, size=len(chunk), rewind=True)
-            pbar.update(len(chunk))
-            
+    blob.upload_from_filename(source_file_path)
+    print(
+        f"File {source_file_path} uploaded to gs://{bucket_name}/{destination_blob_name}"
+    )
 
-bucket_name = 'ac215-reddit-finance-data'
+
+bucket_name = "ac215-reddit-finance-data"
 
 print("start uploading")
-upload_to_gcs(
-    bucket_name=bucket_name,
-    source_file_name='dataset/top.jsonl',
-    destination_blob_name='reddit-raw/top.jsonl'
-)
-print("finish raw upload")
+# upload_to_gcs(
+#     bucket_name=bucket_name,
+#     source_file_path="dataset/top.jsonl",
+#     destination_blob_name="reddit-raw/top.jsonl",
+# )
 
 upload_to_gcs(
     bucket_name=bucket_name,
-    source_file_name='dataset/train.jsonl',
-    destination_blob_name='reddit-processed/train/train.jsonl'
+    source_file_path="dataset/reddit_1k.jsonl",
+    destination_blob_name="reddit-processed/train/reddit_1k.jsonl",
 )
-print("finish train upload")
 
 upload_to_gcs(
     bucket_name=bucket_name,
-    source_file_name='dataset/validation.jsonl',
-    destination_blob_name='reddit-processed/validation/validation.jsonl'
+    source_file_path="dataset/reddit_500.jsonl",
+    destination_blob_name="reddit-processed/train/reddit_500.jsonl",
 )
-print("finish validation upload")
 print("finish the process")
-
-
