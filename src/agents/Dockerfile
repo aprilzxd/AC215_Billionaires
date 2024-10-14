@@ -17,4 +17,4 @@ COPY . /app
 
 EXPOSE 8501
 
-CMD ["pipenv", "run", "streamlit", "run", "finance_assistant.py"]
+CMD ["/bin/bash"]
