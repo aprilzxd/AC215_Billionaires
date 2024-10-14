@@ -20,7 +20,7 @@ if __name__ == "__main__":
     source_blob_name = "reddit-processed/train/reddit_1k.jsonl"
     if not os.path.exists(LOCAL_DIR):
         os.makedirs(LOCAL_DIR)
-    destination_file_name = f"{LOCAL_DIR}/reddit_1k.jsonl"
+    destination_file_name = f"{LOCAL_DIR}/reddit_1k_testing.jsonl"
     download_file_from_gcs(
         bucket_name=bucket_name,
         source_blob_name=source_blob_name,
