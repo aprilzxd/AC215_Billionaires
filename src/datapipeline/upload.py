@@ -2,7 +2,6 @@ from google.cloud import storage
 
 storage_client = storage.Client()
 
-
 def upload_to_gcs(
     bucket_name,
     source_file_path,

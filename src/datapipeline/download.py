@@ -4,7 +4,6 @@ from google.cloud import storage
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../secrets/data-service-account.json"
 
-
 def download_file_from_gcs(bucket_name, source_blob_name, destination_file_name):
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
