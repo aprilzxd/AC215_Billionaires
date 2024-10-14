@@ -17,4 +17,5 @@ COPY . /app
 
 EXPOSE 8501
 
-CMD ["/bin/bash"]
+ENTRYPOINT ["/bin/bash"]
+
