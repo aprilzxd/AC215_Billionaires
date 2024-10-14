@@ -61,11 +61,12 @@ def chat():
     # Get the model endpoint from Vertex AI: https://console.cloud.google.com/vertex-ai/studio/tuning?project=ac215-project
     #MODEL_ENDPOINT = "projects/129349313346/locations/us-central1/endpoints/810191635601162240"
     #MODEL_ENDPOINT = "projects/129349313346/locations/us-central1/endpoints/5584851665544019968"
-    MODEL_ENDPOINT = "projects/129349313346/locations/us-central1/endpoints/3319822527953371136" # Finetuned model
+    # MODEL_ENDPOINT = "projects/129349313346/locations/us-central1/endpoints/3319822527953371136" # Finetuned model
+    MODEL_ENDPOINT = "projects/738060168305/locations/us-central1/endpoints/4117575388509503488" # Finance-215-v1
     
     generative_model = GenerativeModel(MODEL_ENDPOINT)
 
-    query = "How is cheese made?"
+    query = "Give me some recommendations on Nvidia's stock. I am student, and I don't have so much money."
     print("query: ",query)
     response = generative_model.generate_content(
         [query],  # Input prompt
