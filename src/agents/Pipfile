@@ -9,6 +9,7 @@ yfinance = "*"
 matplotlib = "*"         
 phidata = "*"               
 openai = "*"
+plotly = "*"
 
 [requires]
 python_version = "3.11"
