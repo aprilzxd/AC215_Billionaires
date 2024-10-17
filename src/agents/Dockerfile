@@ -1,9 +1,6 @@
 FROM python:3.11-slim-buster
 
 RUN set -ex; \
-    apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends build-essential git && \
     pip install --no-cache-dir --upgrade pip && \
     pip install pipenv
 

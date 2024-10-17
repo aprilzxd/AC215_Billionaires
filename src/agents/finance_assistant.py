@@ -3,8 +3,11 @@ import json
 from phi.assistant import Assistant
 from phi.llm.openai import OpenAIChat
 from phi.tools.yfinance import YFinanceTools
-from multisend import multisend
-from stockplotter import StockPlotter  
+from tools.multisend import multisend
+from tools.stockplotter import StockPlotter
+from tools.portofolio_volatility import PortfolioVolatility
+from tools.correlation import CorrelationMatrix
+from tools.earnings_calendar import EarningsTracker
 from datetime import datetime, timedelta
 from prompt import SYSTEM_PROMPT
 
@@ -19,7 +22,6 @@ receiver_email = [
     "lance_lu@hms.harvard.edu",
 ]
 
-stock_plotter_tool = StockPlotter()
 
 assistant = Assistant(
     llm=OpenAIChat(model="gpt-4o-mini", stream=True),
@@ -30,17 +32,20 @@ assistant = Assistant(
             company_info=True,
             company_news=True,
         ),
-        stock_plotter_tool,  
+        StockPlotter(),
         multisend(
             receiver_email=receiver_email,
             sender_email=sender_email,
             sender_name=sender_name,
             sender_passkey=sender_passkey,
         ),
+        PortfolioVolatility(),
+        CorrelationMatrix(),
+        EarningsTracker(),
     ],
     show_tool_calls=False,
     markdown=True,
-    description=SYSTEM_PROMPT  
+    description=SYSTEM_PROMPT,
 )
 
 st.title("Finance Chatbot")
@@ -74,14 +79,23 @@ if prompt := st.chat_input("Ask about stocks, company info, or financial news...
             message_placeholder.markdown(full_response)
 
         try:
-            if not instructions_processed and "companies" in full_response and "start_date" in full_response:
+            if (
+                not instructions_processed
+                and "companies" in full_response
+                and "start_date" in full_response
+            ):
                 extracted_data = json.loads(full_response)
                 companies = extracted_data.get("companies", ["AAPL", "GOOGL"])
-                start_date = extracted_data.get("start_date", (datetime.today() - timedelta(days=90)).strftime('%Y-%m-%d'))
-                end_date = extracted_data.get("end_date", datetime.today().strftime('%Y-%m-%d'))
-                
+                start_date = extracted_data.get(
+                    "start_date",
+                    (datetime.today() - timedelta(days=90)).strftime("%Y-%m-%d"),
+                )
+                end_date = extracted_data.get(
+                    "end_date", datetime.today().strftime("%Y-%m-%d")
+                )
+
                 instructions_processed = True
-                
+
                 stock_plotter_tool.plot_stock_prices(companies, start_date, end_date)
         except json.JSONDecodeError:
             pass
