@@ -11,6 +11,7 @@ tqdm = "*"
 google-cloud-storage = "*"
 fsspec = "*"
 huggingface_hub = "*"
+scikit-learn = "*"
 
 [requires]
 python_version = "3.11"
