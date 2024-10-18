@@ -6,7 +6,7 @@ def upload_to_gcs(
     bucket_name,
     source_file_path,
     destination_blob_name,
-    credentials_file="../secrets/data-service-account.json",
+    credentials_file="../secrets/llm-service-account.json",
 ):
     storage_client = storage.Client.from_service_account_json(credentials_file)
     bucket = storage_client.bucket(bucket_name)
@@ -17,24 +17,19 @@ def upload_to_gcs(
     )
 
 
-bucket_name = "ac215-reddit-finance-data"
+bucket_name = "finance_215"
 
 print("start uploading")
-# upload_to_gcs(
-#     bucket_name=bucket_name,
-#     source_file_path="dataset/top.jsonl",
-#     destination_blob_name="reddit-raw/top.jsonl",
-# )
 
 upload_to_gcs(
     bucket_name=bucket_name,
-    source_file_path="dataset/reddit_1k.jsonl",
-    destination_blob_name="reddit-processed/train/reddit_1k.jsonl",
+    source_file_path="dataset/test.jsonl",
+    destination_blob_name="reddit_500/test.jsonl",
 )
 
 upload_to_gcs(
     bucket_name=bucket_name,
-    source_file_path="dataset/reddit_500.jsonl",
-    destination_blob_name="reddit-processed/train/reddit_500.jsonl",
+    source_file_path="dataset/train.jsonl",
+    destination_blob_name="reddit_500/train.jsonl",
 )
 print("finish the process")

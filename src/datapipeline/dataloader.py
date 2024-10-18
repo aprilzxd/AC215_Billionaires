@@ -16,11 +16,12 @@ def download_file_from_gcs(bucket_name, source_blob_name, destination_file_name)
 
 if __name__ == "__main__":
     LOCAL_DIR = "dataset"
-    bucket_name = "ac215-reddit-finance-data"
-    source_blob_name = "reddit-processed/train/reddit_1k.jsonl"
+    ftype = "train" # or "test"
+    bucket_name = "finance_215"
+    source_blob_name = f"reddit_500/{ftype}.jsonl"
     if not os.path.exists(LOCAL_DIR):
         os.makedirs(LOCAL_DIR)
-    destination_file_name = f"{LOCAL_DIR}/reddit_1k_testing.jsonl"
+    destination_file_name = f"{LOCAL_DIR}/{ftype}.jsonl"
     download_file_from_gcs(
         bucket_name=bucket_name,
         source_blob_name=source_blob_name,
