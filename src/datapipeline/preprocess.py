@@ -17,8 +17,6 @@ with open(json_file, "w") as f:
 
 print(f"Converted {jsonl_file} to {json_file}")
 
-
-
 # Preprocess the dataset
 OUTPUT_FOLDER = "dataset"
 
@@ -61,5 +59,3 @@ with open(os.path.join(OUTPUT_FOLDER, "train.jsonl"), "w") as json_file:
     json_file.write(df_train[["contents"]].to_json(orient="records", lines=True))
 with open(os.path.join(OUTPUT_FOLDER, "test.jsonl"), "w") as json_file:
     json_file.write(df_test[["contents"]].to_json(orient="records", lines=True))
-
-

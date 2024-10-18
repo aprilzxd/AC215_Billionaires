@@ -15,21 +15,24 @@ In this milestone, we implement the components for data management and versionin
 ### Data
 Our data is [reddit_finance_43_250k](https://huggingface.co/datasets/winddude/reddit_finance_43_250k), a collection of 250k post/comment pairs from 43 financial, investing and crypto subreddits. Post must have all been text, with a length of 250 chars, and a positive score. Each subreddit is narrowed down to the 70th qunatile before being mergered with their top 3 comments and than the other subs. Further score based methods are used to select the top 250k post/comment pairs. We stored this 680MB dataset in a private Google Cloud Bucket.
 
-### Data Pipeline Overview
-Under `src/datapipeline`:
-1. **`download.py`, `preprocess.py`, and `upload.py`**
-   These scripts download the data from huggingface, preprocess them into the format needed for finetuning, and upload them into a  Google Cloud Bucket. We currently reduced the dataset to 500 rows and splitted them into train and test sets.
+### Containers
+Our Dockerfiles all follow the standard convention. Run the containers for each component with `sh docker-shell.sh`. For the gemini-finertuner container, Windows users may need to run `bash docker-shell.sh` instead.
+
+### Data Pipeline
+Under **`src/datapipeline`**:
+1. **`download.py`**
+This script downloads the Reddit data from huggingface as a JSONL file.
+2. **`creator.py`**
+This script processes the downloaded JSONL data, splits it into train and test sets, and for now takes only the first 500 rows of the data. The processed datasets are saved in JSONL format.
+3. **`preprocess.py`**
+This script preprocesses the data
+4. **`upload.py`**
+   
+   
+   preprocess them into the format needed for finetuning, and upload them into a  Google Cloud Bucket. We currently reduced the dataset to 500 rows and splitted them into train and test sets.
 
 2. **`dataloader.py`**
-   This script downloads the existing data in the Google Cloud Bucket.
+   This script downloads the existing data in the Google Cloud Bucket. Change the `ftype` and `source_blob_name` variables to specify the data to download (length of data, train/test data).
 
-3. **`Pipfile`**
-   We used the following packages to help with preprocessing:
-   - `pandas`
-   - `tqdm`
-   - `google-cloud-storage`
-   - `fsspec`
-   - `huggingface_hub`
-
-4. **`Dockerfile`**
-   Our Dockerfiles all follow the standard convention. Run the containers with `sh docker-shell.sh`. For the container for gemini-finertuner, Windows users may need to run `bash docker-shell.sh`.
+### Front end
+Run `pipenv run streamlit run finance_assistant.py --server.address 0.0.0.0` to start the front end, which will run [here](http://localhost:8501).
