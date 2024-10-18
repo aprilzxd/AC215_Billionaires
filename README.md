@@ -20,19 +20,11 @@ Our Dockerfiles all follow the standard convention. Run the containers for each 
 
 ### Data Pipeline
 Under **`src/datapipeline`**:
-1. **`download.py`**
-This script downloads the Reddit data from huggingface as a JSONL file.
-2. **`creator.py`**
-This script processes the downloaded JSONL data, splits it into train and test sets, and for now takes only the first 500 rows of the data. The processed datasets are saved in JSONL format.
-3. **`preprocess.py`**
-This script preprocesses the data
-4. **`upload.py`**
-   
-   
-   preprocess them into the format needed for finetuning, and upload them into a  Google Cloud Bucket. We currently reduced the dataset to 500 rows and splitted them into train and test sets.
-
-2. **`dataloader.py`**
-   This script downloads the existing data in the Google Cloud Bucket. Change the `ftype` and `source_blob_name` variables to specify the data to download (length of data, train/test data).
+1. **`download.py`**: downloads the Reddit data from huggingface as a JSONL file.
+2. **`creator.py`**: processes the downloaded data, splits it into train and test sets, and for now takes only the first 500 rows of the data.
+3. **`preprocess.py`**: processes the data into the format needed for finetuning.
+4. **`upload.py`**: uploads the final data into a Google Cloud Bucket.
+5. **`dataloader.py`**: downloads the existing data in the Google Cloud Bucket. Change the `ftype` and `source_blob_name` variables to specify the data to download (length of data, train/test data).
 
 ### Front end
-Run `pipenv run streamlit run finance_assistant.py --server.address 0.0.0.0` to start the front end, which will run [here](http://localhost:8501).
+Run `pipenv run streamlit run finance_assistant.py --server.address 0.0.0.0` to start the front end, which will be running [here](http://localhost:8501).
