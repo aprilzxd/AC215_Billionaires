@@ -1,3 +1,4 @@
+import argparse
 from google.cloud import storage
 
 storage_client = storage.Client()
@@ -16,20 +17,25 @@ def upload_to_gcs(
         f"File {source_file_path} uploaded to gs://{bucket_name}/{destination_blob_name}"
     )
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Upload processed data to GCS folder (reddit_500, reddit_1000, etc.).")
+    parser.add_argument("dir", help="Specify the folder: 'raw' or 'reddit_500', 'reddit_1000', etc.")
+    args = parser.parse_args()
 
-bucket_name = "finance_215"
+    LOCAL_DIR = "dataset"
+    bucket_name = "finance_215"
+    dir = args.dir
 
-print("start uploading")
+    print("Uploading...")
 
-upload_to_gcs(
-    bucket_name=bucket_name,
-    source_file_path="dataset/test.jsonl",
-    destination_blob_name="reddit_500/test.jsonl",
-)
+    upload_to_gcs(
+        bucket_name=bucket_name,
+        source_file_path=f"{LOCAL_DIR}/train.jsonl",
+        destination_blob_name=f"{dir}/train.jsonl",
+    )
 
-upload_to_gcs(
-    bucket_name=bucket_name,
-    source_file_path="dataset/train.jsonl",
-    destination_blob_name="reddit_500/train.jsonl",
-)
-print("finish the process")
+    upload_to_gcs(
+        bucket_name=bucket_name,
+        source_file_path=f"{LOCAL_DIR}/test.jsonl",
+        destination_blob_name=f"{dir}/test.jsonl",
+    )

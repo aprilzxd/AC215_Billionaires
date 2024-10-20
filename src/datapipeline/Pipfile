@@ -12,6 +12,7 @@ google-cloud-storage = "*"
 fsspec = "*"
 huggingface_hub = "*"
 scikit-learn = "*"
+unidecode = "*"
 
 [requires]
 python_version = "3.11"
