@@ -18,7 +18,9 @@ vertexai.init(project=GCP_PROJECT, location=GCP_LOCATION)
 
 def chat(query):
     print("chat()")
-    MODEL_ENDPOINT = "projects/738060168305/locations/us-central1/endpoints/4117575388509503488"  # Finance-215-v1
+    # MODEL_ENDPOINT = "projects/738060168305/locations/us-central1/endpoints/4117575388509503488"  # Finance-215-v1 (500 data, 1 epoch)
+    # MODEL_ENDPOINT = "projects/738060168305/locations/us-central1/endpoints/2997797562410336256"  # Finance-215-v2 (1000 data, 3 epochs)
+    MODEL_ENDPOINT = "projects/738060168305/locations/us-central1/endpoints/5609885346285223936"  # Finance-215-v2 (1000 data, 2 epochs)
     generative_model = GenerativeModel(MODEL_ENDPOINT)
 
     print("query: ", query)
