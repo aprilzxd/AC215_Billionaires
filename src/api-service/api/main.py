@@ -1,10 +1,8 @@
 from fastapi import FastAPI
-from .routers import openai_router
 from .routers import agent_router
 
 app = FastAPI()
 
-app.include_router(openai_router.router, tags=["OpenAI"])
 app.include_router(agent_router.router, tags=["Agent"])
 
 @app.get("/")
