@@ -95,7 +95,8 @@ if prompt := st.chat_input("Ask about stocks, company info, or financial news...
                 )
 
                 instructions_processed = True
-
+                
+                stock_plotter_tool = StockPlotter()
                 stock_plotter_tool.plot_stock_prices(companies, start_date, end_date)
         except json.JSONDecodeError:
             pass
