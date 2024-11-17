@@ -4,7 +4,7 @@ from .routers import agent_router
 
 app = FastAPI()
 
-app.include_router(openai_router.router, prefix="/api/v1", tags=["OpenAI"])
+app.include_router(openai_router.router, tags=["OpenAI"])
 app.include_router(agent_router.router, tags=["Agent"])
 
 @app.get("/")
