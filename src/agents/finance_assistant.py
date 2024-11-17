@@ -4,16 +4,16 @@ import requests
 from phi.assistant import Assistant
 from phi.llm.openai import OpenAIChat
 from phi.tools.yfinance import YFinanceTools
-from .tools.multisend import multisend
-from .tools.stockplotter import StockPlotter
-from .tools.portofolio_volatility import PortfolioVolatility
-from .tools.correlation import CorrelationMatrix
-from .tools.earnings_calendar import EarningsTracker
+from tools.multisend import multisend
+from tools.stockplotter import StockPlotter
+from tools.portofolio_volatility import PortfolioVolatility
+from tools.correlation import CorrelationMatrix
+from tools.earnings_calendar import EarningsTracker
 from datetime import datetime, timedelta
-from .prompt import SYSTEM_PROMPT
+from prompt import SYSTEM_PROMPT
 
 
-BASE_URL = "http://127.0.0.1:8001"
+BASE_URL = "http://0.0.0.0:8001"
 ENDPOINT = "/api/v1/agent/chat"
 
 sender_email = "yananlancelu@gmail.com"

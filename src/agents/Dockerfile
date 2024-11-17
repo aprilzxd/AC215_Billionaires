@@ -14,5 +14,4 @@ COPY . /app
 
 EXPOSE 8501
 
-ENTRYPOINT ["/bin/bash"]
-
+CMD ["pipenv", "run", "streamlit", "run", "finance_assistant.py"]
