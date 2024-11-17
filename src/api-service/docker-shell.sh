@@ -1,8 +1,10 @@
-#!/bin/bash
+export SECRETS_DIR=$(pwd)/../../../secrets/
+export OPENAI_API_KEY=$(cat ${SECRETS_DIR}/openai_key.txt)
 
-export SECRETS_DIR=$(realpath $(pwd)/../../../secrets/openai_key)
+docker build -t api-service -f Dockerfile .
 
 docker run -p 8001:8001 \
   -v "$SECRETS_DIR":/run/secrets/openai_key:ro \
-  -e OPENAI_API_KEY_FILE=/run/secrets/openai_key \
+  -e OPENAI_API_KEY=$OPENAI_API_KEY \
   api-service
+  
