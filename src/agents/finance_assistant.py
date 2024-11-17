@@ -3,13 +3,13 @@ import json
 from phi.assistant import Assistant
 from phi.llm.openai import OpenAIChat
 from phi.tools.yfinance import YFinanceTools
-from tools.multisend import multisend
-from tools.stockplotter import StockPlotter
-from tools.portofolio_volatility import PortfolioVolatility
-from tools.correlation import CorrelationMatrix
-from tools.earnings_calendar import EarningsTracker
+from .tools.multisend import multisend
+from .tools.stockplotter import StockPlotter
+from .tools.portofolio_volatility import PortfolioVolatility
+from .tools.correlation import CorrelationMatrix
+from .tools.earnings_calendar import EarningsTracker
 from datetime import datetime, timedelta
-from prompt import SYSTEM_PROMPT
+from .prompt import SYSTEM_PROMPT
 
 
 sender_email = "yananlancelu@gmail.com"
