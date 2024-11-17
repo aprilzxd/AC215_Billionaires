@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+import requests
 from phi.assistant import Assistant
 from phi.llm.openai import OpenAIChat
 from phi.tools.yfinance import YFinanceTools
@@ -12,8 +13,11 @@ from datetime import datetime, timedelta
 from .prompt import SYSTEM_PROMPT
 
 
+BASE_URL = "http://127.0.0.1:8001"
+ENDPOINT = "/api/v1/agent/chat"
+
 sender_email = "yananlancelu@gmail.com"
-sender_name = "Huandong, April, Lance"
+sender_name = "Huandong, April, Lance, Mingyuan"
 sender_passkey = "neij kvys dupr owqc"
 receiver_email = [
     "mingyuan_ma@g.harvard.edu",
@@ -70,13 +74,33 @@ if prompt := st.chat_input("Ask about stocks, company info, or financial news...
         message_placeholder = st.empty()
         full_response = ""
 
-        response_generator = assistant.run(conversation_history, stream=True)
+        # response_generator = assistant.run(conversation_history, stream=True)
+
+        # Define query parameters
+        payload = {
+            "message": conversation_history,
+            "stream": False
+        }
+
+        try:
+            # Send the request
+            response = requests.post(BASE_URL + ENDPOINT, json=payload)
+
+            # Check if the request was successful
+            if response.status_code == 200:
+                full_response = response.json()["response"]
+            else:
+                print(f"Failed with status code: {response.status_code}")
+                print("Response content:", response.text)
+        except requests.exceptions.RequestException as e:
+            print("Error occurred:", e)
 
         instructions_processed = False
 
-        for chunk in response_generator:
-            full_response += chunk
-            message_placeholder.markdown(full_response)
+        # for chunk in response_generator:
+        #     full_response += chunk
+        #     message_placeholder.markdown(full_response)
+        message_placeholder.markdown(full_response)
 
         try:
             if (
@@ -96,6 +120,7 @@ if prompt := st.chat_input("Ask about stocks, company info, or financial news...
 
                 instructions_processed = True
 
+                stock_plotter_tool = StockPlotter()
                 stock_plotter_tool.plot_stock_prices(companies, start_date, end_date)
         except json.JSONDecodeError:
             pass
