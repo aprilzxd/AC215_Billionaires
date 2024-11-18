@@ -23,3 +23,26 @@ Under **`src/datapipeline`:**
 
 ### Front end
 Run `pipenv run streamlit run finance_assistant.py --server.address 0.0.0.0` to start the front end, which will be running [here](http://localhost:8501).
+
+
+### Run CI and Tests Locally
+
+Export OpenAI API Key:
+
+export SECRETS_DIR=$(pwd)/secrets
+export OPENAI_API_KEY=$(cat ${SECRETS_DIR}/openai_key.txt)
+
+Build and Start Services:
+
+docker-compose up --build -d
+Builds and runs api-service and redis containers in the background.
+
+Installs dependencies and runs tests with a coverage report.
+
+pipenv install
+pipenv run pytest tests/integration_tests --cov=. --cov-report=html --cov-fail-under=20
+
+Stop and Remove Services:
+
+docker-compose down
+Stops and cleans up all running containers.
