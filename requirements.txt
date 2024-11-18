@@ -1,0 +1,10 @@
+fastapi
+pytest
+pytest-cov
+flake8
+httpx
+pandas
+phidata
+yfinance
+plotly
+streamlit
