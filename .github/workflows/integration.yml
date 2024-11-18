@@ -37,19 +37,23 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
 
-      # Step 5: Build Docker images using Docker Compose
+      # Step 5: Load OPENAI_API_KEY from GitHub Secrets
+      - name: Set environment variables
+        run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+
+      # Step 6: Build Docker images using Docker Compose
       - name: Build Docker images
         run: docker-compose -f docker-compose.yml build
 
-      # Step 6: Start Docker containers using Docker Compose
+      # Step 7: Start Docker containers using Docker Compose
       - name: Start Docker containers
         run: docker-compose -f docker-compose.yml up -d
 
-      # Step 7: Wait for services to be ready
+      # Step 8: Wait for services to be ready
       - name: Wait for services to start
         run: sleep 10  # Adjust this duration as needed
 
-      # Step 8: Set up Python and cache pip packages
+      # Step 9: Set up Python and cache pip packages
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -63,34 +67,34 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      # Step 9: Install Pipenv and dependencies
+      # Step 10: Install Pipenv and dependencies
       - name: Install Pipenv
         run: pip install pipenv
 
       - name: Install dependencies with Pipenv
         run: pipenv install
 
-      # # Step 10: Run Flake8
+      # # Step 11: Run Flake8
       # - name: Run Flake8
       #   run: pipenv run flake8 .
 
-      # Step 11: Run integration tests
+      # Step 12: Run integration tests
       - name: Run integration tests
         run: pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
 
-      # Step 11.5: Check logs if tests fail
+      # Step 12.5: Check logs if tests fail
       - name: Fetch Docker logs for debugging
         if: failure()  # This step will run only if the tests fail
         run: docker-compose logs api-service
 
-      # Step 12: Upload coverage report
+      # Step 13: Upload coverage report
       - name: Upload coverage report
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
           path: htmlcov  # The folder where pytest-cov stores HTML reports
 
-      # Step 13: Tear down Docker containers
+      # Step 14: Tear down Docker containers
       - name: Stop and remove Docker containers
         if: always()
         run: docker-compose -f docker-compose.yml down
