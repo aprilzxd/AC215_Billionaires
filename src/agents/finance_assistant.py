@@ -13,8 +13,8 @@ from datetime import datetime, timedelta
 from prompt import SYSTEM_PROMPT
 
 
-BASE_URL = "http://0.0.0.0:8001"
-ENDPOINT = "/api/v1/agent/chat"
+BASE_URL = "http://api-container:8001"
+ENDPOINT = "/agent/chat"
 
 sender_email = "yananlancelu@gmail.com"
 sender_name = "Huandong, April, Lance, Mingyuan"
@@ -78,7 +78,7 @@ if prompt := st.chat_input("Ask about stocks, company info, or financial news...
 
         # Define query parameters
         payload = {
-            "message": conversation_history,
+            "prompt": conversation_history,
             "stream": False
         }
 
