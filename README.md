@@ -25,24 +25,25 @@ Under **`src/datapipeline`:**
 Run `pipenv run streamlit run finance_assistant.py --server.address 0.0.0.0` to start the front end, which will be running [here](http://localhost:8501).
 
 
-### Run CI and Tests Locally
+### CI
+CI is triggered on every push or pull request to the milestone4_CI_test branch.
+Steps:
+- Check out the code.
+- Set up Docker Buildx and cache layers for efficiency.
+- Install Docker Compose and build images.
+- Start Docker containers using docker-compose.
+- Wait for services to initialize.
+- Set up Python and install dependencies using Pipenv.
+- Run flake8 for linting (optional, can be enabled).
+- Execute integration tests using pytest with coverage reporting.
+- Upload the test coverage report.
+- Tear down Docker containers after tests.
 
-Export OpenAI API Key:
+Secrets Management
+The API_KEY is securely managed through GitHub Secrets. It is automatically injected into the environment during CI.
 
-export SECRETS_DIR=$(pwd)/secrets
-export OPENAI_API_KEY=$(cat ${SECRETS_DIR}/openai_key.txt)
 
-Build and Start Services:
+### Run CI Test Locally
 
-docker-compose up --build -d
-Builds and runs api-service and redis containers in the background.
-
-Installs dependencies and runs tests with a coverage report.
-
-pipenv install
-pipenv run pytest tests/integration_tests --cov=. --cov-report=html --cov-fail-under=20
-
-Stop and Remove Services:
-
-docker-compose down
-Stops and cleans up all running containers.
+docker-compose up --build
+pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
