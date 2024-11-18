@@ -76,7 +76,7 @@ jobs:
 
       # Step 11: Run integration tests
       - name: Run integration tests
-        run: pipenv run pytest tests/integration_tests --cov=. --cov-report=html --cov-fail-under=50
+        run: pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
 
       # Step 12: Upload coverage report
       - name: Upload coverage report
