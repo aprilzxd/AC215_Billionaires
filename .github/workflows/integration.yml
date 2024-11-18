@@ -78,10 +78,10 @@ jobs:
       - name: Run integration tests
         run: pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
 
-      # Step 11.5 : Check log if fail
+      # Step 11.5: Check logs if tests fail
       - name: Fetch Docker logs for debugging
-      if: failure()  # This step will run only if the tests fail
-      run: docker-compose logs api-service
+        if: failure()  # This step will run only if the tests fail
+        run: docker-compose logs api-service
 
       # Step 12: Upload coverage report
       - name: Upload coverage report
