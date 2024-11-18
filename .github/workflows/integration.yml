@@ -70,7 +70,7 @@ jobs:
       - name: Install dependencies with Pipenv
         run: pipenv install
 
-      # Step 10: Run Flake8
+      # # Step 10: Run Flake8
       # - name: Run Flake8
       #   run: pipenv run flake8 .
 

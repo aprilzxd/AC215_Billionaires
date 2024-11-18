@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 pytest = "*"
+pytest-cov = "*"
 exceptiongroup = "*"
 requests = "*"
 httpx = "*"  
@@ -19,6 +20,7 @@ seaborn = "*"
 numpy = "*"
 uvicorn = "*"
 fastapi = "*"
+
 
 [dev-packages]
 
