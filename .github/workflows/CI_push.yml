@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # Triggers when code is pushed to the main branch
+      - milestone4 # For milestone4
+      - milestone4_CI_test # For testing purpose
 
 jobs:
   test:
