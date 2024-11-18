@@ -39,7 +39,7 @@ jobs:
 
       # Step 5: Load OPENAI_API_KEY from GitHub Secrets
       - name: Set environment variables
-        run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+        run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_KEY }}" >> $GITHUB_ENV
 
       # Step 6: Build Docker images using Docker Compose
       - name: Build Docker images
