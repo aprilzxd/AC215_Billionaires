@@ -10,6 +10,19 @@ exceptiongroup = "*"
 requests = "*"
 httpx = "*"  
 pydantic = "*"  
+streamlit = "*"
+yfinance = "*"
+matplotlib = "*"
+phidata = "*"
+openai = "*"
+plotly = "*"
+seaborn = "*"
+numpy = "*"
+uvicorn = "*"
+fastapi = "*"
+
+
+[dev-packages]
 
 [requires]
 python_version = "3.9"
