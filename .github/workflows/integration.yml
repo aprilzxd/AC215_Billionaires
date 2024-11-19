@@ -3,10 +3,10 @@ name: Multi-Container Integration Test
 on:
   push:
     branches:
-      - milestone4_CI_test
+      - milestone4
   pull_request:
     branches:
-      - milestone4_CI_test
+      - milestone4
 
 jobs:
   build-and-test:
