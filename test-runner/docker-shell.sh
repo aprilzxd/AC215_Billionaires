@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export SECRETS_DIR=$(pwd)/../secrets/
+export SECRETS_DIR=$(pwd)/../../secrets/
 if [ ! -f "${SECRETS_DIR}/openai_key.txt" ]; then
   echo "Error: openai_key.txt not found in ${SECRETS_DIR}!"
   exit 1

@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pytest = "*"
 pytest-cov = "*"
+exceptiongroup = "*"
+requests = "*"
 
 [requires]
 python_version = "3.9"
