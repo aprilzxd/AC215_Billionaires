@@ -32,10 +32,14 @@ services:
 
   test:
     build:
-      context: .
-      dockerfile: Dockerfile.test
+      context: ..
+      dockerfile: test-runner/Dockerfile.test
     container_name: test-container
     command: pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
+    volumes:
+      - ../:/app
+    networks:
+      - my-network
 
 networks:
   my-network:
