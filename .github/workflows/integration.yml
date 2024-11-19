@@ -84,7 +84,6 @@ jobs:
 
       # Step 12.5: Check logs if tests fail
       - name: Fetch Docker logs for debugging
-        if: failure()  # This step will run only if the tests fail
         run: docker-compose logs api-service
 
       # Step 13: Upload coverage report
