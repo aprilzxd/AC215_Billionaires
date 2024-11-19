@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 from unittest.mock import patch
-from agents.tools.stockplotter import StockPlotter
+from frontend.tools.stockplotter import StockPlotter
 
 # Fixture to initialize the StockPlotter object
 @pytest.fixture

@@ -1,9 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-import json
 from utils.finance_assistant import assistant
-import openai
-import os
 
 router = APIRouter()
 

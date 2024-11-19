@@ -1,56 +1,11 @@
 import streamlit as st
 import json
 import requests
-from phi.assistant import Assistant
-from phi.llm.openai import OpenAIChat
-from phi.tools.yfinance import YFinanceTools
-from tools.multisend import multisend
-from tools.stockplotter import StockPlotter
-from tools.portofolio_volatility import PortfolioVolatility
-from tools.correlation import CorrelationMatrix
-from tools.earnings_calendar import EarningsTracker
 from datetime import datetime, timedelta
-from prompt import SYSTEM_PROMPT
-
+from tools.stockplotter import StockPlotter
 
 BASE_URL = "http://api-container:8001"
 ENDPOINT = "/agent/chat"
-
-sender_email = "yananlancelu@gmail.com"
-sender_name = "Huandong, April, Lance, Mingyuan"
-sender_passkey = "neij kvys dupr owqc"
-receiver_email = [
-    "mingyuan_ma@g.harvard.edu",
-    "april_zhang@g.harvard.edu",
-    "huandongchang@g.harvard.edu",
-    "lance_lu@hms.harvard.edu",
-]
-
-
-assistant = Assistant(
-    llm=OpenAIChat(model="gpt-4o-mini", stream=True),
-    tools=[
-        YFinanceTools(
-            stock_price=True,
-            analyst_recommendations=True,
-            company_info=True,
-            company_news=True,
-        ),
-        StockPlotter(),
-        multisend(
-            receiver_email=receiver_email,
-            sender_email=sender_email,
-            sender_name=sender_name,
-            sender_passkey=sender_passkey,
-        ),
-        PortfolioVolatility(),
-        CorrelationMatrix(),
-        EarningsTracker(),
-    ],
-    show_tool_calls=False,
-    markdown=True,
-    description=SYSTEM_PROMPT,
-)
 
 st.title("Finance Chatbot")
 
@@ -74,12 +29,10 @@ if prompt := st.chat_input("Ask about stocks, company info, or financial news...
         message_placeholder = st.empty()
         full_response = ""
 
-        # response_generator = assistant.run(conversation_history, stream=True)
-
         # Define query parameters
         payload = {
             "prompt": conversation_history,
-            "stream": False
+            "stream": True
         }
 
         try:
@@ -88,7 +41,7 @@ if prompt := st.chat_input("Ask about stocks, company info, or financial news...
 
             # Check if the request was successful
             if response.status_code == 200:
-                full_response = response.json()["response"]
+                response_generator = response.json()["response"]
             else:
                 print(f"Failed with status code: {response.status_code}")
                 print("Response content:", response.text)
@@ -97,10 +50,9 @@ if prompt := st.chat_input("Ask about stocks, company info, or financial news...
 
         instructions_processed = False
 
-        # for chunk in response_generator:
-        #     full_response += chunk
-        #     message_placeholder.markdown(full_response)
-        message_placeholder.markdown(full_response)
+        for chunk in response_generator:
+            full_response += chunk
+            message_placeholder.markdown(full_response)
 
         try:
             if (

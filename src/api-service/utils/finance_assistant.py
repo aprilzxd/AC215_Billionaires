@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+from datetime import datetime, timedelta
 from phi.assistant import Assistant
 from phi.llm.openai import OpenAIChat
 from phi.tools.yfinance import YFinanceTools
@@ -8,7 +9,6 @@ from .tools.stockplotter import StockPlotter
 from .tools.portofolio_volatility import PortfolioVolatility
 from .tools.correlation import CorrelationMatrix
 from .tools.earnings_calendar import EarningsTracker
-from datetime import datetime, timedelta
 from .prompt import SYSTEM_PROMPT
 
 

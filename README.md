@@ -1,4 +1,4 @@
-# AC215 - Milestone2 - Billionaire Secretary
+# AC215 - Milestone4 - Billionaire Secretary
 
 **Team Members:** Huandong Chang, Mingyuan Ma, Lance Lu, April Zhang
 
