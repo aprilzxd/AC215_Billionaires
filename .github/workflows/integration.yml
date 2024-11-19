@@ -43,11 +43,11 @@ jobs:
 
       # Step 6: Build Docker images using Docker Compose
       - name: Build Docker images
-        run: docker-compose -f docker-compose.yml build
+        run: docker-compose -f docker/docker-compose.yml build
 
       # Step 7: Start Docker containers using Docker Compose
       - name: Start Docker containers
-        run: docker-compose -f docker-compose.yml up -d
+        run: docker-compose -f docker/docker-compose.yml up -d
 
       # Step 8: Wait for services to be ready
       - name: Wait for services to start
@@ -92,4 +92,4 @@ jobs:
       # Step 14: Tear down Docker containers
       - name: Stop and remove Docker containers
         if: always()
-        run: docker-compose -f docker-compose.yml down
+        run: docker-compose -f docker/docker-compose.yml down
