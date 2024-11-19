@@ -74,15 +74,11 @@ jobs:
       - name: Install dependencies with Pipenv
         run: pipenv install
 
-      # # Step 11: Run Flake8
-      # - name: Run Flake8
-      #   run: pipenv run flake8 .
-
-      # Step 12: Run integration tests
+      # Step 11: Run integration tests
       - name: Run integration tests
         run: pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
 
-      # Step 12.5: Check logs if tests fail
+      # Step 12: Check logs if tests fail
       - name: Fetch Docker logs for debugging
         run: docker-compose logs api-service
 
