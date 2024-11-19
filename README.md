@@ -23,3 +23,27 @@ Under **`src/datapipeline`:**
 
 ### Front end
 Run `pipenv run streamlit run finance_assistant.py --server.address 0.0.0.0` to start the front end, which will be running [here](http://localhost:8501).
+
+
+### CI
+CI is triggered on every push or pull request to the milestone4_CI_test branch.
+Steps:
+- Check out the code.
+- Set up Docker Buildx and cache layers for efficiency.
+- Install Docker Compose and build images.
+- Start Docker containers using docker-compose.
+- Wait for services to initialize.
+- Set up Python and install dependencies using Pipenv.
+- Run flake8 for linting (optional, can be enabled).
+- Execute integration tests using pytest with coverage reporting.
+- Upload the test coverage report.
+- Tear down Docker containers after tests.
+
+Secrets Management
+The API_KEY is securely managed through GitHub Secrets. It is automatically injected into the environment during CI.
+
+
+### Run CI Test Locally
+
+docker-compose up --build
+pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50

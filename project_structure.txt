@@ -1,0 +1,73 @@
+.
+├── LICENSE
+├── Pipfile
+├── README.md
+├── dataset
+├── docker-compose.yml
+├── project_structure.txt
+├── pytest.ini
+├── reports
+│   └── Milestone_2.pdf
+├── requirements.txt
+├── src
+│   ├── agents
+│   │   ├── Dockerfile
+│   │   ├── Pipfile
+│   │   ├── Pipfile.lock
+│   │   ├── __init__.py
+│   │   ├── docker-shell.sh
+│   │   ├── finance_assistant.py
+│   │   ├── prompt.py
+│   │   └── tools
+│   │       ├── __init__.py
+│   │       ├── correlation.py
+│   │       ├── earnings_calendar.py
+│   │       ├── multisend.py
+│   │       ├── portofolio_volatility.py
+│   │       └── stockplotter.py
+│   ├── api-service
+│   │   ├── Dockerfile
+│   │   ├── Pipfile
+│   │   ├── Pipfile.lock
+│   │   ├── api
+│   │   │   ├── __init__.py
+│   │   │   ├── main.py
+│   │   │   └── routers
+│   │   │       ├── __init__.py
+│   │   │       └── agent_router.py
+│   │   ├── docker-entrypoint.sh
+│   │   ├── docker-shell.sh
+│   │   └── utils
+│   │       ├── __init__.py
+│   │       ├── finance_assistant.py
+│   │       ├── prompt.py
+│   │       └── tools
+│   │           ├── __init__.py
+│   │           ├── correlation.py
+│   │           ├── earnings_calendar.py
+│   │           ├── multisend.py
+│   │           ├── portofolio_volatility.py
+│   │           └── stockplotter.py
+│   ├── datapipeline
+│   │   ├── Dockerfile
+│   │   ├── Pipfile
+│   │   ├── Pipfile.lock
+│   │   ├── __init__.py
+│   │   ├── dataloader.py
+│   │   ├── docker-shell.sh
+│   │   ├── preprocess.py
+│   │   └── upload.py
+│   └── gemini-finetuner
+│       ├── Dockerfile
+│       ├── Pipfile
+│       ├── Pipfile.lock
+│       ├── chat.py
+│       ├── docker-entrypoint.sh
+│       ├── docker-shell.sh
+│       ├── env.dev
+│       └── finetune.py
+└── tests
+    ├── test_api_endpoint.py
+    └── test_stockplotter.py
+
+14 directories, 57 files
