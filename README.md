@@ -45,5 +45,4 @@ The `API_KEY` is securely managed through GitHub Secrets. It is automatically in
 
 
 ### Run CI Test Locally
-`docker-compose up --build
-pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50`
+`docker-compose up --build pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50`
