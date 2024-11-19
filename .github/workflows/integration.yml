@@ -41,56 +41,55 @@ jobs:
       - name: Set environment variables
         run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_KEY }}" >> $GITHUB_ENV
 
-      # Step 6: Build and run tests using docker-compose
-      - name: Run tests with docker-compose
-        run: |
-          docker-compose -f docker/docker-compose.yml up --build --abort-on-container-exit
+      # Step 6: Build Docker images using Docker Compose
+      - name: Build Docker images
+        run: docker-compose -f docker-compose.yml build
 
-      # # Step 7: Start Docker containers using Docker Compose
-      # - name: Start Docker containers
-      #   run: docker-compose -f docker/docker-compose.yml up -d
+      # Step 7: Start Docker containers using Docker Compose
+      - name: Start Docker containers
+        run: docker-compose -f docker-compose.yml up -d
 
-      # # Step 8: Wait for services to be ready
-      # - name: Wait for services to start
-      #   run: sleep 10  # Adjust this duration as needed
+      # Step 8: Wait for services to be ready
+      - name: Wait for services to start
+        run: sleep 10  # Adjust this duration as needed
 
-      # # Step 9: Set up Python and cache pip packages
-      # - name: Set up Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: '3.9'
+      # Step 9: Set up Python and cache pip packages
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
 
-      # - name: Cache pip packages
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ~/.cache/pip
-      #     key: ${{ runner.os }}-pip-${{ hashFiles('Pipfile.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-pip-
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      # # Step 10: Install Pipenv and dependencies
-      # - name: Install Pipenv
-      #   run: pip install pipenv
+      # Step 10: Install Pipenv and dependencies
+      - name: Install Pipenv
+        run: pip install pipenv
 
-      # - name: Install dependencies with Pipenv
-      #   run: pipenv install
+      - name: Install dependencies with Pipenv
+        run: pipenv install
 
-      # # Step 11: Run integration tests
-      # - name: Run integration tests
-      #   run: pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
+      # Step 11: Run integration tests
+      - name: Run integration tests
+        run: pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
 
-      # # Step 12: Check logs if tests fail
-      # - name: Fetch Docker logs for debugging
-      #   run: docker-compose logs api-service
+      # Step 12: Check logs if tests fail
+      - name: Fetch Docker logs for debugging
+        run: docker-compose logs api-service
 
-      # # Step 13: Upload coverage report
-      # - name: Upload coverage report
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: coverage-report
-      #     path: htmlcov  # The folder where pytest-cov stores HTML reports
+      # Step 13: Upload coverage report
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: htmlcov  # The folder where pytest-cov stores HTML reports
 
       # Step 14: Tear down Docker containers
       - name: Stop and remove Docker containers
         if: always()
-        run: docker-compose -f docker/docker-compose.yml down
+        run: docker-compose -f docker-compose.yml down
