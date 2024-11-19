@@ -1,0 +1,16 @@
+FROM python:3.11-slim
+
+# Set work directory
+WORKDIR /app
+
+# Copy Pipfile and install dependencies (use caching)
+COPY Pipfile Pipfile.lock /app/
+RUN pip install --no-cache-dir pipenv && pipenv install --dev
+
+# Copy source code and tests
+COPY src/ /app/src/
+COPY tests/ /app/tests/
+COPY pytest.ini /app/
+
+# Run tests and generate coverage report
+CMD ["pipenv", "run", "pytest", "tests/", "--cov=src", "--cov-report=html:/app/htmlcov"]

@@ -1,6 +1,15 @@
+#!/bin/bash
+set -e
+
 export SECRETS_DIR=$(pwd)/../secrets/
+if [ ! -f "${SECRETS_DIR}/openai_key.txt" ]; then
+  echo "Error: openai_key.txt not found in ${SECRETS_DIR}!"
+  exit 1
+fi
+
 export OPENAI_API_KEY=$(cat ${SECRETS_DIR}/openai_key.txt)
 
-docker-compose -f docker-compose.yml build
+docker-compose up --build -d
 
-docker-compose -f docker-compose.yml up -d
+echo "Containers are starting..."
+echo "OPENAI_API_KEY is loaded from ${SECRETS_DIR}/openai_key.txt"
