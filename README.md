@@ -21,6 +21,7 @@ Under **`src/datapipeline`:**
 2. **`preprocess.py`:** process the raw `top.jsonl` file to produce new train and test sets locally. Use a command line argument to specify the sample size. For example, running `python preprocess.py 500` will locally generate new train and test sets `train.jsonl` and `test.jsonl` totaling 500 rows.
 3. **`upload.py`:** uploads the local train and test sets into the Google Cloud Bucket. For example, running `python upload.py reddit_500` will upload the local `train.jsonl` and `test.jsonl` files into the `reddit_500` folder in the bucket.
 
+## Milestone4
 ### Front end
 Run `pipenv run streamlit run finance_assistant.py --server.address 0.0.0.0` to start the front end, which will be running [here](http://localhost:8501).
 
@@ -40,10 +41,9 @@ Steps:
 - Tear down Docker containers after tests.
 
 Secrets Management
-The API_KEY is securely managed through GitHub Secrets. It is automatically injected into the environment during CI.
+The `API_KEY` is securely managed through GitHub Secrets. It is automatically injected into the environment during CI.
 
 
 ### Run CI Test Locally
-
-docker-compose up --build
-pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
+`docker-compose up --build
+pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50`

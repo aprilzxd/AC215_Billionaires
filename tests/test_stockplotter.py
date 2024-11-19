@@ -10,8 +10,8 @@ def stock_plotter():
 
 def test_plot_stock_prices_with_mock_data(stock_plotter):
     # Mock yfinance download and Streamlit's plotly_chart within a context
-    with patch("agents.tools.stockplotter.yf.download") as mock_yf_download, \
-         patch("agents.tools.stockplotter.st.plotly_chart") as mock_plotly_chart:
+    with patch("api-service.utils.tools.stockplotter.yf.download") as mock_yf_download, \
+         patch("api-service.utils.tools.stockplotter.st.plotly_chart") as mock_plotly_chart:
         
         # Create mock data to simulate the downloaded stock prices
         mock_data = pd.DataFrame({
