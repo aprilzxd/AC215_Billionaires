@@ -3,20 +3,32 @@ version: '3.8'
 services:
   api-service:
     build:
-      context: ./src/api-service  
+      context: ../src/api-service 
+      dockerfile: Dockerfile    
+    container_name: api-container
     ports:
-      - "8001:8001"  # Maps the container port to the host
-    networks:
-      - my-network
+      - "8001:8001"            
     environment:
+      - PORT=8001               
       - OPENAI_API_KEY=${OPENAI_API_KEY}  
     volumes:
       - ./secrets:/run/secrets:ro 
-
-  redis:
-    image: "redis:alpine"  # Example of a Redis service
     networks:
-      - my-network
+      - my-network              
+
+  frontend:
+    build:
+      context: ../src/frontend    
+      dockerfile: Dockerfile     
+    container_name: streamlit-container
+    ports:
+      - "8501:8501"             
+    depends_on:
+      - api-service             
+    networks:
+      - my-network               
+    environment:
+      - API_URL=http://api-container:8001
 
 networks:
   my-network:
