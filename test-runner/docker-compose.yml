@@ -10,9 +10,7 @@ services:
       - "8001:8001"            
     environment:
       - PORT=8001               
-      - OPENAI_API_KEY=${OPENAI_API_KEY}  
-    volumes:
-      - ./secrets:/run/secrets:ro 
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     networks:
       - my-network              
 
@@ -35,14 +33,13 @@ services:
       context: ..
       dockerfile: test-runner/Dockerfile.test
     container_name: test-container
-    command: pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50
+    working_dir: /app
     volumes:
       - ../:/app
+    command: pipenv run pytest tests/ --cov=src --cov-report=html --cov-fail-under=50
     networks:
       - my-network
-    depends_on:
-      - api-service
-      - frontend
+
 networks:
   my-network:
     driver: bridge
