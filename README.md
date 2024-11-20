@@ -46,9 +46,5 @@ Secrets Management
 The `API_KEY` is securely managed through GitHub Secrets. It is automatically injected into the environment during CI.
 
 ### Test Documentation:
-Detailed explanations of the testing strategy and implemented tests.
-Should Include:
-Testing Tools Used: (e.g. PyTest)
-Instructions to Run Tests Manually: For developers to replicate test results locally.
-
-Run CI Test Locally: `docker-compose up --build pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50`
+The tests are written using `PyTest`. For developers to replicate test results locally, run `sh docker-shell.sh` in the root directory and find the coverage report in `htmlcov/index.html`.
+![coverage_report](coverage_report.jpg)

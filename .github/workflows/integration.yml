@@ -74,6 +74,10 @@ jobs:
       - name: Install dependencies with Pipenv
         run: pipenv install
 
+      # Optional: Run Flake8
+      # - name: Run Flake8
+      #   run: pipenv run flake8 .
+
       # Step 11: Run integration tests
       - name: Run integration tests
         run: pipenv run pytest tests/ --cov-report=html --cov-fail-under=50
