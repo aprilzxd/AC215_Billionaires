@@ -1,4 +1,4 @@
-# AC215 - Milestone4 - Billionaire Secretary
+# AC215 - Billionaire Secretary
 
 **Team Members:** Huandong Chang, Mingyuan Ma, Lance Lu, April Zhang
 
@@ -22,9 +22,11 @@ Under **`src/datapipeline`:**
 3. **`upload.py`:** uploads the local train and test sets into the Google Cloud Bucket. For example, running `python upload.py reddit_500` will upload the local `train.jsonl` and `test.jsonl` files into the `reddit_500` folder in the bucket.
 
 ## Milestone4
+### Application Design Document
+![design_graph](architecture.png)
+
 ### Front end
 Run `pipenv run streamlit run finance_assistant.py --server.address 0.0.0.0` to start the front end, which will be running [here](http://localhost:8501).
-
 
 ### CI
 CI is triggered on every push or pull request to the milestone4_CI_test branch.
@@ -43,6 +45,11 @@ Steps:
 Secrets Management
 The `API_KEY` is securely managed through GitHub Secrets. It is automatically injected into the environment during CI.
 
-
 ### Run CI Test Locally
 `docker-compose up --build pipenv run pytest tests/ --cov=. --cov-report=html --cov-fail-under=50`
+
+### Test Documentation:
+Detailed explanations of the testing strategy and implemented tests.
+Should Include:
+Testing Tools Used: (e.g. PyTest)
+Instructions to Run Tests Manually: For developers to replicate test results locally.

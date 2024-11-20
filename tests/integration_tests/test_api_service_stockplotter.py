@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 from unittest.mock import patch
-from frontend.tools.stockplotter import StockPlotter
+from tools.stockplotter import StockPlotter
 
 # Fixture to initialize the StockPlotter object
 @pytest.fixture
@@ -10,8 +10,8 @@ def stock_plotter():
 
 def test_plot_stock_prices_with_mock_data(stock_plotter):
     # Mock yfinance download and Streamlit's plotly_chart within a context
-    with patch("frontend.tools.stockplotter.yf.download") as mock_yf_download, \
-         patch("frontend.tools.stockplotter.st.plotly_chart") as mock_plotly_chart:
+    with patch("tools.stockplotter.yf.download") as mock_yf_download, \
+         patch("tools.stockplotter.st.plotly_chart") as mock_plotly_chart:
         
         # Create mock data to simulate the downloaded stock prices
         mock_data = pd.DataFrame({

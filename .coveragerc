@@ -1,6 +1,4 @@
 [run]
 source = src
 omit =
-    src/data-pipeline/*
-    src/api-service/utils/tools/earnings_calendar.py
     src/frontend/chat.py
