@@ -11,8 +11,6 @@ services:
     environment:
       - PORT=8001               
       - OPENAI_API_KEY=${OPENAI_API_KEY}  
-    volumes:
-      - ./secrets:/run/secrets:ro 
     networks:
       - my-network              
 

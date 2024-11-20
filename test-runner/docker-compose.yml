@@ -40,7 +40,9 @@ services:
       - ../:/app
     networks:
       - my-network
-
+    depends_on:
+      - api-service
+      - frontend
 networks:
   my-network:
     driver: bridge

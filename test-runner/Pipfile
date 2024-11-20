@@ -10,4 +10,8 @@ exceptiongroup = "*"
 requests = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
