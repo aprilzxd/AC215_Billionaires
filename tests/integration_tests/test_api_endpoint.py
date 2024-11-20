@@ -2,7 +2,7 @@ import requests
 
 def test_agent_chat_endpoint():
     # Define the API URL
-    url = "http://api-container:8001/agent/chat"
+    url = "http://127.0.0.1:8001/agent/chat"
 
     # Define the payload as a dictionary
     payload = {
