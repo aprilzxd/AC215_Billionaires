@@ -4,8 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pytest = "*"
 pytest-cov = "*"
+pytest-playwright = "*"
 exceptiongroup = "*"
+requests = "*"
 httpx = "*"  
 pydantic = "*"  
 streamlit = "*"
@@ -18,13 +21,9 @@ seaborn = "*"
 numpy = "*"
 uvicorn = "*"
 fastapi = "*"
-requests = "*"
-pandas = "*"
-pytest = "*"
+
 
 [dev-packages]
-pytest = "*"
-pytest-cov = "*"
 
 [requires]
 python_version = "3.11"
