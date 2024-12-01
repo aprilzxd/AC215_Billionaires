@@ -1,6 +1,10 @@
 export SECRETS_DIR=$(pwd)/../../../secrets/
 export OPENAI_API_KEY=$(cat ${SECRETS_DIR}/openai_key.txt)
 
+if ! docker network ls | grep -q "my-network"; then
+  docker network create my-network
+fi
+
 docker build -t api-service -f Dockerfile .
 
 docker run --rm --network my-network --name api-container -p 8001:8001 \
