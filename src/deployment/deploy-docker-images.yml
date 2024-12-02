@@ -9,17 +9,30 @@
   - name: Print tag
     debug:
       var: tag
-  - name: Build container image
+  - name: Build api container image
     community.general.docker_image:
       build:
-        path: /agents
-        platform: linux/amd64/v2
-      name: gcr.io/{{ gcp_project }}/billionairs_agents:{{ tag.stdout}}
+        path: /src/api-service
+        platform: linux/amd64
+      name: gcr.io/{{ gcp_project }}/billionairs_api:{{ tag.stdout }}
       source: build
-  - name: Push image to GCR
+  - name: Push api image to GCR
     community.general.docker_image:
-      name: gcr.io/{{ gcp_project }}/billionairs_agents:{{ tag.stdout}}
-      repository: gcr.io/{{ gcp_project }}/billionairs_agents:{{ tag.stdout}}
+      name: gcr.io/{{ gcp_project }}/billionairs_api:{{ tag.stdout }}
+      repository: gcr.io/{{ gcp_project }}/billionairs_api
+      push: yes
+      source: local
+  - name: Build frontend container image
+    community.general.docker_image:
+      build:
+        path: /src/frontend
+        platform: linux/amd64/v2
+      name: gcr.io/{{ gcp_project }}/billionairs_frontend:{{ tag.stdout}}
+      source: build
+  - name: Push frontend image to GCR
+    community.general.docker_image:
+      name: gcr.io/{{ gcp_project }}/billionairs_frontend:{{ tag.stdout}}
+      repository: gcr.io/{{ gcp_project }}/billionairs_frontend:{{ tag.stdout}}
       push: yes
       source: local
   - name: "Save docker tag"

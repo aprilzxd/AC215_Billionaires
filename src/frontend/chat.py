@@ -4,7 +4,7 @@ import requests
 from datetime import datetime, timedelta
 from tools.stockplotter import StockPlotter
 
-BASE_URL = "http://api-container:8001"
+BASE_URL = "http://api-service:8001"
 ENDPOINT = "/agent/chat"
 
 st.title("Finance Chatbot")

@@ -7,7 +7,7 @@ fi
 
 docker build -t api-service -f Dockerfile .
 
-docker run --rm --network my-network --name api-container -p 8001:8001 \
+docker run --rm --network my-network --name api-service -p 8001:8001 \
   -v "$SECRETS_DIR":/run/secrets/openai_key:ro \
   -e OPENAI_API_KEY=$OPENAI_API_KEY \
   api-service

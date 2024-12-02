@@ -9,7 +9,7 @@ all:
       gcp_project: "unified-canyon-436117-q9"
       gcp_region: "us-east1"
       gcp_zone: "us-east1-c"
-      docker_network_name: "appnetwork"
+      docker_network_name: "my-network"
       persistent_disk_name: "billionaires-demo-disk"
       persistent_disk_size: 50
       machine_instance_name: "billionaires-demo"
@@ -19,4 +19,4 @@ all:
     children:
         appserver:
             hosts:
-                35.243.151.168:
+                35.229.109.252:
