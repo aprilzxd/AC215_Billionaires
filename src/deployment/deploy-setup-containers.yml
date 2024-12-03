@@ -70,7 +70,7 @@
         published_ports:
           - 8001:8001
         env:
-          OPENAI_API_KEY: "/secrets/openai_key.txt"
+          OPENAI_API_KEY: "{{openai_api_key}}"
         networks:
           - name: "{{docker_network_name}}"
         volumes:

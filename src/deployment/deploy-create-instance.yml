@@ -34,6 +34,34 @@
         service_account_email: "{{ gcp_service_account_email }}"
       when: cluster_state == "present"
 
+    # Add firewall rule for backend API (port 8001)
+    - name: "Create backend API firewall rule"
+      gce_net:
+        name: default
+        fwname: "default-allow-api"
+        allowed: "tcp:8001"
+        state: "present"
+        src_range: "0.0.0.0/0"
+        project_id: "{{ gcp_project }}"
+        target_tags: "http-server"
+        credentials_file: "{{ gcp_service_account_file }}"
+        service_account_email: "{{ gcp_service_account_email }}"
+      when: cluster_state == "present"
+
+    # Add firewall rule for frontend (port 8501)
+    - name: "Create frontend firewall rule"
+      gce_net:
+        name: default
+        fwname: "default-allow-frontend"
+        allowed: "tcp:8501"
+        state: "present"
+        src_range: "0.0.0.0/0"
+        project_id: "{{ gcp_project }}"
+        target_tags: "http-server"
+        credentials_file: "{{ gcp_service_account_file }}"
+        service_account_email: "{{ gcp_service_account_email }}"
+      when: cluster_state == "present"
+
     # Create Persistent Disk
     - name: Create Compute disk
       gcp_compute_disk:

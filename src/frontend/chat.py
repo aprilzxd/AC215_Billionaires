@@ -1,3 +1,4 @@
+import sys
 import streamlit as st
 import json
 import requests
@@ -45,8 +46,10 @@ if prompt := st.chat_input("Ask about stocks, company info, or financial news...
             else:
                 print(f"Failed with status code: {response.status_code}")
                 print("Response content:", response.text)
-        except requests.exceptions.RequestException as e:
-            print("Error occurred:", e)
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+            print("Exception details:", e)
+            sys.exit(1)
 
         instructions_processed = False
 
