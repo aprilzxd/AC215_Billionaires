@@ -48,3 +48,9 @@ The `API_KEY` is securely managed through GitHub Secrets. It is automatically in
 ### Test Documentation:
 The tests are written using `PyTest`. For developers to replicate test results locally, run `sh docker-shell.sh` in the root directory and find the coverage report in `htmlcov/index.html`.
 ![coverage_report](coverage_report.jpg)
+
+
+## Milestone5
+### ML Workflow
+ML Workflow allows users to to conduct data collection, data processing, and model finetuning with a single click. Under src/workflow, run `bash docker-shell.sh` and then run `python cli.py` to start the ml workflow.
+![ml_workflow_demo](ml_workflow.png)
