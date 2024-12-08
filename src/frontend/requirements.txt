@@ -1,0 +1,9 @@
+streamlit
+yfinance
+matplotlib
+phidata
+openai
+plotly
+seaborn
+numpy
+requests
