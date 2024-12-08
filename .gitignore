@@ -123,8 +123,8 @@ celerybeat.pid
 *.sage.py
 
 # Virtual Environments
-api-service/venv-api/
-frontend/venv-frontend/
+src/api-service/venv-api/
+src/frontend/venv-frontend/
 
 # Other Virtual Environments (if any)
 venv/
