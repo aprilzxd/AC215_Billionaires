@@ -174,3 +174,6 @@ cython_debug/
 *temp
 *backup
 *.tmp
+
+src/frontend/requirements.txt
+src/api-service/requirements.txt
