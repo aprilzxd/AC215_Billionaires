@@ -1,0 +1,12 @@
+streamlit
+yfinance
+matplotlib
+phidata
+openai
+plotly
+seaborn
+numpy
+uvicorn
+fastapi
+requests
+kaleido
