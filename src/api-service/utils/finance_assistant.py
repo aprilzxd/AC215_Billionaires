@@ -5,9 +5,9 @@ from phi.tools.googlesearch import GoogleSearch
 from phi.tools.newspaper_tools import NewspaperTools
 from .tools.multisend import multisend
 from .tools.stockplotter import StockPlotter
-from .tools.portofolio_volatility import PortfolioVolatility
-from .tools.correlation import CorrelationMatrix
-from .tools.earnings_calendar import EarningsTracker
+# from .tools.portofolio_volatility import PortfolioVolatility
+# from .tools.correlation import CorrelationMatrix
+# from .tools.earnings_calendar import EarningsTracker
 from .prompt import SYSTEM_PROMPT
 
 # Fixed sender email configuration
@@ -25,7 +25,7 @@ DEFAULT_RECEIVER_EMAILS = [
 
 # Define the agent with tools
 agent = Agent(
-    llm=OpenAIChat(model="gpt-4o-mini", stream=True,debug_mode=True),
+    llm=OpenAIChat(model="o1-mini", stream=True),
     tools=[
         YFinanceTools(
             enable_all = True
