@@ -14,4 +14,4 @@ COPY . /app
 
 EXPOSE 8501
 
-CMD ["pipenv", "run", "streamlit", "run", "chat.py"]
+CMD ["pipenv", "run", "streamlit", "run", "app.py"]

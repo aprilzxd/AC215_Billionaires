@@ -1,6 +1,8 @@
 from phi.agent import Agent
 from phi.llm.openai import OpenAIChat
 from phi.tools.yfinance import YFinanceTools
+from phi.tools.googlesearch import GoogleSearch
+from phi.tools.newspaper_tools import NewspaperTools
 from .tools.multisend import multisend
 from .tools.stockplotter import StockPlotter
 from .tools.portofolio_volatility import PortfolioVolatility
@@ -23,11 +25,12 @@ DEFAULT_RECEIVER_EMAILS = [
 
 # Define the agent with tools
 agent = Agent(
-    llm=OpenAIChat(model="gpt-4o-mini", stream=True, debug_mode=True, monitoring=True),
+    llm=OpenAIChat(model="gpt-4o-mini", stream=True,debug_mode=True),
     tools=[
         YFinanceTools(
             enable_all = True
         ),
+        GoogleSearch(), NewspaperTools(),
         StockPlotter(),
         multisend(
             receiver_email=DEFAULT_RECEIVER_EMAILS,
@@ -35,12 +38,13 @@ agent = Agent(
             sender_name=SENDER_NAME,
             sender_passkey=SENDER_PASSKEY,
         ),
-        PortfolioVolatility(),
-        CorrelationMatrix(),
-        EarningsTracker(),
+        # PortfolioVolatility(),
+        # CorrelationMatrix(),
+        # EarningsTracker(),
     ],
     show_tool_calls=True,
     markdown=True,
+    add_history_to_messages=True,
     description=SYSTEM_PROMPT,
     add_datetime_to_instructions=True
 )

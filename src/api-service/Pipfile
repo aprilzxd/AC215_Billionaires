@@ -3,7 +3,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
-[dev-packages]
+[requires]
+python_version = "3.11"
 
 [packages]
 streamlit = "*"
@@ -16,6 +17,9 @@ seaborn = "*"
 numpy = "*"
 uvicorn = "*"
 fastapi = "*"
-
-[requires]
-python_version = "3.11"
+requests = "*"
+kaleido = "*"
+newspaper3k = "*"
+lxml_html_clean = "*"
+googlesearch-python = "*"
+pycountry = "*"
