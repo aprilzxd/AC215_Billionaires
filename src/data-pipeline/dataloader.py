@@ -2,7 +2,7 @@ import os
 import argparse
 from google.cloud import storage
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../secrets/llm-service-account.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../secrets/llm-service-account.json"
 
 def download_file_from_gcs(bucket_name, source_blob_name, destination_file_name):
     storage_client = storage.Client()
@@ -18,9 +18,13 @@ if __name__ == "__main__":
     parser.add_argument("dir", help="Specify the folder: 'raw' or 'reddit_500', 'reddit_1000', etc.")
     args = parser.parse_args()
 
-    LOCAL_DIR = "dataset"
+    LOCAL_DIR = "./dataset"
     bucket_name = "finance_215"
     dir = args.dir
+    
+    
+    if not os.path.exists(LOCAL_DIR):
+        os.makedirs(LOCAL_DIR)
 
     if dir == 'raw':
         download_file_from_gcs(
