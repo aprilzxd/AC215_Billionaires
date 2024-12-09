@@ -41,7 +41,9 @@ if user_input := st.chat_input("Ask about stocks, companies, or financial news..
                             message_placeholder.markdown(full_response, unsafe_allow_html=True)
 
         except requests.exceptions.RequestException as e:
-            st.error("Error communicating with the backend. Please try again later.")
+            # print the error
+            st.error(f"Error communicating with the backend. Please try again later. Error: {e}")
+            # st.error("Error communicating with the backend. Please try again later.")
         except json.JSONDecodeError as e:
             st.error("Invalid response format received from backend.")
 
