@@ -1,5 +1,4 @@
 #!/bin/bash
-asd
 set -e
 if [ -z "$PORT" ]; then
   PORT=8001
