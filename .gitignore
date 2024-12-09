@@ -122,11 +122,16 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
-.venv
-env/
+# Virtual Environments
+src/api-service/venv-api/
+src/frontend/venv-frontend/
+
+# Other Virtual Environments (if any)
 venv/
+.env/
+.env.*
+.venv/
+env/
 ENV/
 env.bak/
 venv.bak/
@@ -169,3 +174,6 @@ cython_debug/
 *temp
 *backup
 *.tmp
+
+src/frontend/requirements.txt
+src/api-service/requirements.txt

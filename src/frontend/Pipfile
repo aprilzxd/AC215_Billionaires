@@ -13,6 +13,7 @@ plotly = "*"
 seaborn = "*"
 numpy = "*"
 requests = "*"
+watchdog = "*"
 
 [requires]
 python_version = "3.11"
