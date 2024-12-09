@@ -5,17 +5,14 @@ from phi.tools.googlesearch import GoogleSearch
 from phi.tools.newspaper_tools import NewspaperTools
 from .tools.multisend import multisend
 from .tools.stockplotter import StockPlotter
-# from .tools.portofolio_volatility import PortfolioVolatility
-# from .tools.correlation import CorrelationMatrix
-# from .tools.earnings_calendar import EarningsTracker
 from .prompt import SYSTEM_PROMPT
 
 # Fixed sender email configuration
 SENDER_EMAIL = "yananlancelu@gmail.com"
-SENDER_NAME = "Huandong, April, Lance"
+SENDER_NAME = "Huandong, April, Lance, Mingyuan"
 SENDER_PASSKEY = "neij kvys dupr owqc"
 
-# Default receiver emails (can be updated dynamically)
+# Default receiver emails
 DEFAULT_RECEIVER_EMAILS = [
     "mingyuan_ma@g.harvard.edu",
     "april_zhang@g.harvard.edu",
@@ -25,7 +22,7 @@ DEFAULT_RECEIVER_EMAILS = [
 
 # Define the agent with tools
 agent = Agent(
-    llm=OpenAIChat(model="o1-mini", stream=True),
+    llm=OpenAIChat(model="gpt-4o", stream=True),
     tools=[
         YFinanceTools(
             enable_all = True
@@ -38,11 +35,7 @@ agent = Agent(
             sender_name=SENDER_NAME,
             sender_passkey=SENDER_PASSKEY,
         ),
-        # PortfolioVolatility(),
-        # CorrelationMatrix(),
-        # EarningsTracker(),
     ],
-    show_tool_calls=True,
     markdown=True,
     add_history_to_messages=True,
     description=SYSTEM_PROMPT,

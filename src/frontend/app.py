@@ -100,8 +100,9 @@ if user_input := st.chat_input("Ask about stocks, companies, or financial news..
 
                     # Flatten the y values in case they are nested lists
                     for trace in fig_json['data']:
-                        if isinstance(trace['y'], list) and isinstance(trace['y'][0], list):
-                            trace['y'] = [item[0] for item in trace['y']]
+                        if isinstance(trace['y'], list) and all(isinstance(item, list) for item in trace['y']):
+                            # Choose the first non-null value in each nested list
+                            trace['y'] = [next((value for value in item if value is not None), None) for item in trace['y']]
 
                     # Create the Plotly figure from the JSON data
                     fig = go.Figure(data=fig_json.get("data", []), layout=fig_json.get("layout", {}))
