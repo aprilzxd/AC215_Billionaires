@@ -10,10 +10,10 @@ import plotly.graph_objects as go
 BASE_URL = "http://api-service:8001"
 
 st.set_page_config(
-    page_title="Finance Chatbot",
+    page_title="Billionaires AI",
     page_icon=":moneybag:",
 )
-st.title("Finance Chatbot")
+st.title("Billionaires AI")
 
 initialize_session()
 display_messages(st.session_state.messages)

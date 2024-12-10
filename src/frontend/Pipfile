@@ -4,19 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-streamlit = "*"          
-yfinance = "*"           
-matplotlib = "*"         
-phidata = "*"               
-openai = "*"
+streamlit = "*"
 plotly = "*"
-seaborn = "*"
-numpy = "*"
 requests = "*"
-watchdog = "*"
 
 [requires]
 python_version = "3.11"
-
-
-
