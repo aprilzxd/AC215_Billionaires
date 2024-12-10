@@ -1,23 +1,23 @@
 all:
-    vars:
-      ansible_user: sa_105087566817607220331
-      ansible_ssh_private_key_file: "../../secrets/ssh-key-deployment"
-      gcp_service_account_file: "../../secrets/deployment.json"
-      openai_api_key: "{{lookup('file', '../../secrets/openai_key.txt')}}"
-      gcp_service_account_email: "deployment@unified-canyon-436117-q9.iam.gserviceaccount.com"
-      gcp_auth_kind: "serviceaccount"
-      gcp_scopes: "https://www.googleapis.com/auth/compute"
-      gcp_project: "unified-canyon-436117-q9"
-      gcp_region: "us-east1"
-      gcp_zone: "us-east1-c"
-      docker_network_name: "my-network"
-      persistent_disk_name: "billionaires-demo-disk"
-      persistent_disk_size: 50
-      machine_instance_name: "billionaires-demo"
-      machine_type: "n2d-standard-2"
-      machine_disk_size: 50
+  vars:
+    ansible_user: sa_105087566817607220331
+    ansible_ssh_private_key_file: "/secrets/ssh-key-deployment"
+    gcp_service_account_file: "/secrets/deployment.json"
+    openai_api_key: "{{ lookup('file','/secrets/openai_key.txt') }}"
+    gcp_service_account_email: "deployment@unified-canyon-436117-q9.iam.gserviceaccount.com"
+    gcp_auth_kind: "serviceaccount"
+    gcp_scopes: "https://www.googleapis.com/auth/compute"
+    gcp_project: "unified-canyon-436117-q9"
+    gcp_region: "us-east1"
+    gcp_zone: "us-east1-c"
+    docker_network_name: "my-network"
+    persistent_disk_name: "billionaires-demo-disk"
+    persistent_disk_size: 50
+    machine_instance_name: "billionaires-demo"
+    machine_type: "n2d-standard-2"
+    machine_disk_size: 50
 
-    children:
-        appserver:
-            hosts:
-                35.229.109.252:
+  children:
+    appserver:
+      hosts:
+        35.229.109.252:

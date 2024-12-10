@@ -13,8 +13,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - id: 'auth'
-        name: Authenticate to Google Cloud
+      - name: Set up GCP auth
         uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
@@ -22,30 +21,41 @@ jobs:
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v1
 
-      - name: Configure Docker Client for GCR
+      - name: Configure Docker for GCR
         run: gcloud auth configure-docker --quiet
+
+      # Create secret files from GitHub secrets
+      - name: Prepare secrets
+        run: |
+          # Write GCP credentials JSON
+          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > deployment.json
+
+          # Write SSH private key
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh-key-deployment
+          chmod 600 ssh-key-deployment
+
+          # Write OpenAI key
+          echo "${{ secrets.OPENAI_API_KEY }}" > openai_key.txt
 
       - name: Build deployment container
         run: |
           cd src/deployment
           docker build -t billionaire-app-deployment -f Dockerfile .
 
-      # Run our deployment process inside the container
       - name: Run Deployment inside container
         run: |
           docker run --rm --name billionaire-app-deployment \
             -v /var/run/docker.sock:/var/run/docker.sock \
-            -v $HOME/.ssh:/home/app/.ssh \
             -v ${{ github.workspace }}:/workspace \
-            --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
+            -v ${{ github.workspace }}/deployment.json:/secrets/deployment.json:ro \
+            -v ${{ github.workspace }}/ssh-key-deployment:/secrets/ssh-key-deployment:ro \
+            -v ${{ github.workspace }}/openai_key.txt:/secrets/openai_key.txt:ro \
             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
             -e GCP_PROJECT=unified-canyon-436117-q9 \
             -e GCP_ZONE=us-east1-c \
             billionaire-app-deployment bash -c "
               cd /app/src/deployment && \
-              # Build & push images
-              ansible-playbook deploy-docker-images.yml -i inventory.yml && \
-              # Update containers on VM
-              ansible-playbook deploy-setup-containers.yml -i inventory.yml && \
-              ansible-playbook deploy-setup-webserver.yml -i inventory.yml
+              ansible-playbook -vvv deploy-docker-images.yml -i inventory.yml && \
+              ansible-playbook -vvv deploy-setup-containers.yml -i inventory.yml && \
+              ansible-playbook -vvv deploy-setup-webserver.yml -i inventory.yml
             "
