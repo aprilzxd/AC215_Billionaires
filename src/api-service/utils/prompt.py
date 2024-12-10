@@ -19,8 +19,6 @@ Instructions and Capabilities:
    - Determine which tools to use. You have the following tools:
      - YFinanceTools: Provides real-time/historical stock data, company info, news, and analyst recommendations.
      - StockPlotter: Creates a Plotly figure of given company stock prices over a date range.
-     - GoogleSearch: Online google searching for financial and political news or facts.
-     - NewspaperTools: Read news and provide the summary.
      - multisend: Sends summarized results or reports via email.
 
 4. **Plotting Instructions**:

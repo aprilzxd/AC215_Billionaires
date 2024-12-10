@@ -9,14 +9,14 @@
   - name: Print tag
     debug:
       var: tag
-  - name: Build api container image
+  - name: Build api service container image
     community.general.docker_image:
       build:
         path: /src/api-service
         platform: linux/amd64
       name: gcr.io/{{ gcp_project }}/billionairs_api:{{ tag.stdout }}
       source: build
-  - name: Push api image to GCR
+  - name: Push api service image to GCR
     community.general.docker_image:
       name: gcr.io/{{ gcp_project }}/billionairs_api:{{ tag.stdout }}
       repository: gcr.io/{{ gcp_project }}/billionairs_api

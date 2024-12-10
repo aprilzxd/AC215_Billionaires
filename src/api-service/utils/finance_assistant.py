@@ -1,8 +1,6 @@
 from phi.agent import Agent
 from phi.llm.openai import OpenAIChat
 from phi.tools.yfinance import YFinanceTools
-from phi.tools.googlesearch import GoogleSearch
-from phi.tools.newspaper_tools import NewspaperTools
 from .tools.multisend import multisend
 from .tools.stockplotter import StockPlotter
 from .prompt import SYSTEM_PROMPT
@@ -27,7 +25,6 @@ agent = Agent(
         YFinanceTools(
             enable_all = True
         ),
-        GoogleSearch(), NewspaperTools(),
         StockPlotter(),
         multisend(
             receiver_email=DEFAULT_RECEIVER_EMAILS,
