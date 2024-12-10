@@ -1,13 +1,14 @@
-name: Continuous Integration and Continuous Deployment
+name: CI CD for Billionaire App
 
 on:
   push:
-    branches: [ "milestone5" ]
+    branches: [ "main" ]
 
 jobs:
   deploy_app:
     if: contains(github.event.head_commit.message, '/deploy-app')
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -27,18 +28,24 @@ jobs:
       - name: Build deployment container
         run: |
           cd src/deployment
-          docker build -t cheese-app-deployment -f Dockerfile .
+          docker build -t billionaire-app-deployment -f Dockerfile .
 
-      - name: Run Deploy App
+      # Run our deployment process inside the container
+      - name: Run Deployment inside container
         run: |
-          docker run --rm --name cheese-app-deployment \
+          docker run --rm --name billionaire-app-deployment \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -v $HOME/.ssh:/home/app/.ssh \
-            -v ${{ github.workspace }}/src/frontend:/src/frontend \
-            -v ${{ github.workspace }}/src/api-service:/src/api-service \
-            -v ${{ github.workspace }}/src/deployment:/src/deployment \
+            -v ${{ github.workspace }}:/workspace \
             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
-            --env GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
+            -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
             -e GCP_PROJECT=unified-canyon-436117-q9 \
-            -e GCP_ZONE=s-central1-a \
-            cheese-app-deployment sh deploy-k8s-update.sh
+            -e GCP_ZONE=us-east1-c \
+            billionaire-app-deployment bash -c "
+              cd /app/src/deployment && \
+              # Build & push images
+              ansible-playbook deploy-docker-images.yml -i inventory.yml && \
+              # Update containers on VM
+              ansible-playbook deploy-setup-containers.yml -i inventory.yml && \
+              ansible-playbook deploy-setup-webserver.yml -i inventory.yml
+            "
