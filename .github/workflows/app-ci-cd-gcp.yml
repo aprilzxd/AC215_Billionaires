@@ -42,30 +42,26 @@ jobs:
             -v ${{ github.workspace }}/src/deployment/deployment.json:/secrets/deployment.json:ro \
             -v ${{ github.workspace }}/ssh-key-deployment:/secrets/ssh-key-deployment:ro \
             -v ${{ github.workspace }}/openai_key.txt:/secrets/openai_key.txt:ro \
+            -e ANSIBLE_HOST_KEY_CHECKING=False \
             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
             -e GCP_PROJECT=unified-canyon-436117-q9 \
             -e GCP_ZONE=us-east1-c \
             billionaire-app-deployment -c "
               set -x
-              cd /app/src/deployment
+              cd /workspace/src/deployment
               echo '--- DEBUG: Listing directory contents ---'
               ls -al
-
               echo '--- DEBUG: Showing inventory.yml ---'
               cat inventory.yml || true
-
               echo '--- DEBUG: Testing Ansible Inventory ---'
               ansible-inventory -i inventory.yml --list
-
               echo '--- DEBUG: Checking SSH connectivity with ansible ping ---'
               ansible -i inventory.yml appserver -m ping -vvv
-
               echo '--- DEBUG: Running deploy-docker-images.yml ---'
               ansible-playbook -vvv deploy-docker-images.yml -i inventory.yml
-
               echo '--- DEBUG: Running deploy-setup-containers.yml ---'
               ansible-playbook -vvv deploy-setup-containers.yml -i inventory.yml
-
               echo '--- DEBUG: Running deploy-setup-webserver.yml ---'
               ansible-playbook -vvv deploy-setup-webserver.yml -i inventory.yml
             "
+
