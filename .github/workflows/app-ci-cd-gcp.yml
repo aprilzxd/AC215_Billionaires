@@ -1,19 +1,10 @@
-name: CI CD for Billionaire App
-
-on:
-  push:
-    branches: [ "milestone5" ]
-
 jobs:
   deploy_app:
-    if: contains(github.event.head_commit.message, '/deploy-app')
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up GCP auth
+      - name: Set up gcloud auth
         uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
@@ -27,15 +18,12 @@ jobs:
       # Create secret files from GitHub secrets
       - name: Prepare secrets
         run: |
-          # Write GCP credentials JSON
           echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > deployment.json
-
-          # Write SSH private key
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh-key-deployment
           chmod 600 ssh-key-deployment
-
-          # Write OpenAI key
           echo "${{ secrets.OPENAI_API_KEY }}" > openai_key.txt
+          # If using gcp-service.json
+          echo "${{ secrets.GCP_SERVICE_CREDENTIALS }}" > gcp-service.json
 
       - name: Build deployment container
         run: |
@@ -50,6 +38,7 @@ jobs:
             -v ${{ github.workspace }}/deployment.json:/secrets/deployment.json:ro \
             -v ${{ github.workspace }}/ssh-key-deployment:/secrets/ssh-key-deployment:ro \
             -v ${{ github.workspace }}/openai_key.txt:/secrets/openai_key.txt:ro \
+            -v ${{ github.workspace }}/gcp-service.json:/secrets/gcp-service.json:ro \
             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
             -e GCP_PROJECT=unified-canyon-436117-q9 \
             -e GCP_ZONE=us-east1-c \
