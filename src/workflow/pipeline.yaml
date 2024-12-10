@@ -1,0 +1,78 @@
+# PIPELINE DEFINITION
+# Name: ml-pipeline
+components:
+  comp-data-collector:
+    executorLabel: exec-data-collector
+  comp-data-processing:
+    executorLabel: exec-data-processing
+  comp-gemini-finetuner:
+    executorLabel: exec-gemini-finetuner
+deploymentSpec:
+  executors:
+    exec-data-collector:
+      container:
+        args:
+        - dataloader.py
+        - raw
+        command:
+        - pipenv
+        - run
+        - python
+        image: barrychang0527/datapipeline
+        resources:
+          cpuLimit: 0.5
+          memoryLimit: 2.0
+    exec-data-processing:
+      container:
+        args:
+        - dataloader.py
+        - reddit_500
+        command:
+        - pipenv
+        - run
+        - python
+        image: barrychang0527/datapipeline
+        resources:
+          cpuLimit: 0.5
+          memoryLimit: 2.0
+    exec-gemini-finetuner:
+      container:
+        args:
+        - finetune_test.py
+        command:
+        - pipenv
+        - run
+        - python
+        image: barrychang0527/gemini-finetuner
+pipelineInfo:
+  name: ml-pipeline
+root:
+  dag:
+    tasks:
+      data-collector:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-data-collector
+        taskInfo:
+          name: Data Collector
+      data-processing:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-data-processing
+        dependentTasks:
+        - data-collector
+        taskInfo:
+          name: Data Processor
+      gemini-finetuner:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-gemini-finetuner
+        dependentTasks:
+        - data-processing
+        taskInfo:
+          name: Gemini Finetuner
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.3.0

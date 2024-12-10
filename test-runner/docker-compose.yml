@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  api-service:
+    build:
+      context: ../src/api-service 
+      dockerfile: Dockerfile    
+    container_name: api-service
+    ports:
+      - "8001:8001"            
+    environment:
+      - PORT=8001               
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - my-network              
+
+  frontend:
+    build:
+      context: ../src/frontend    
+      dockerfile: Dockerfile     
+    container_name: streamlit-container
+    ports:
+      - "8501:8501"             
+    depends_on:
+      - api-service             
+    networks:
+      - my-network               
+    environment:
+      - API_URL=http://api-service:8001
+
+  test:
+    build:
+      context: ..
+      dockerfile: test-runner/Dockerfile.test
+    container_name: test-container
+    working_dir: /app
+    volumes:
+      - ../:/app
+    command: pipenv run pytest tests/ --cov=src --cov-report=html --cov-fail-under=50
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
