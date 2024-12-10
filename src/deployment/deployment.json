@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "unified-canyon-436117-q9",
+  "private_key_id": "b5a82aabc8ff258fd72810d41bc89b3dc62db26a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDTOGxhQCVkrN6g\nyEnigKfmm1W2nrapCcoVyH5WRFluA4ahFZ6oycx1NygrByLD9dmBBuIfewY7MBW2\nX/eTtYvofguyD/bEOuRyyLNLJIY7wDUmNh2LaX3Y0kAd1NnKgX+Ai09WiDbS3yx2\nZBoxXgcojyuqvEJ/cpZz671GeLBVplyuspQl013vkDXn3cAidQuSq2u7Xj52oSZK\nHLf7Yexx03EFva1PGUZD+iSB49YFo0+aSopdzmRzpqS3ULeuOn82L2UhBj2UxMud\nOhQuz+e6pq0xqQxWlPWpOaSSRsgl0X0lbvekW1NL+PdNZPwaL4Jg7sOI3WM9FZwp\nbjagAq83AgMBAAECggEAApEXSHCInfpDRQ3rfh2PT68lSRjiv0ZO3Jm5LMMbx6aD\n9HLm2ukPD8bdfyRcpe3MIULE7PdIQmvICH4aVMjHaT6MVb7W6vsYDMjbrgKWTEg4\nt05ixcydypJqa695n7QMV+z2jf3fIWkompJvTFK8mrb7xqLJTtBcKlS76VLSxb+o\n53eYuH/2mAjHg6n/o7HtU2kDlUpDnG+1+tSd8lYV+qKcVUDySWgWuhGRPmIshy31\nw/8JNCePCToT8pOCqJ/5Z+w+p2rny29459HQQpVyBWahhHjvQrF9kNJelrWNL4k/\nj1yNqNVe8APwRs02jpKOGCX4CFILBq+c3qUdC2BiWQKBgQD6vocUio4YXso/e57i\nmbmn1fJmCmVJ/byOaQwAKGiq3wXzrsAnEyMDGn7y1VCEFilAK1XocDMdXBFsBNo3\nDZZEn4rQuCGio5eGwHMV4d2xF/YEU34LFLixm12KqNu0s4vTQ4rydm+jwJYXkffr\nfMwcQ7eCpaqwqVC8YGy/WCMe+QKBgQDXpdBpSy/SYzLI2sYf3Us+QPXV43V5CD2Z\n+EfFYjH6JF9zEWkQLjHNo4F2zNV6Yc/fulMdxL4mxLOhIZBrg9Cmr009ThPGRWlM\nZUL8el0/2JXNM5W8mkscDQ/4T3Im+32x/EVhpSqK/rjEHPVBiwPzJcWuo+hvZST3\nuQ5OfW5brwKBgAGLsyF5SS71RqHljTEwaWiTdQ8T+VPfcI4gL6bAmQSUo2DBLwYO\npCScwTOWBQ0LZe2zVrA8INSJgMH9taqpNsftg9mNiQeLop9+CDeWUNuKnkWgjiJb\nWlgd8RGtwMz4XmBLBkxAVqfXxBUZHUIiXs+9yx/PDaJRKOJAZes4C99hAoGAPSj2\n2dYMIxQlRBfgFwtxGp/b2SSgnYn7xp5G5LE70WDdfUoTzRX85ACaaDIh3Yq+JQq4\nJfo1n9Mryug1CHkjBRM0yc1KCHKJMbSKcgbWSZRIsCEQN6Re5v7BZ8BIdMvg00jj\n+JSaYz9o8Z3w5PzjSuOMlEJCWs2J1YQzjYk/clsCgYAKfP1MPa5pRJU8SH6LEDf4\nNhD9o/7iosFQpAREtg6ZeDE9kKugAUA/oI3NA5IRc3H2rJWsVkun1x1xX+FNAySK\nC/A7gzN4Ige8tnOb2jQUnJt1Zx4tyMUyCQ9QuSRZcPELStbvA2WMcx1Uz2prdom3\nZNE3ey4hVpGayu2wyfo8FQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "deployment@unified-canyon-436117-q9.iam.gserviceaccount.com",
+  "client_id": "105087566817607220331",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/deployment%40unified-canyon-436117-q9.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
