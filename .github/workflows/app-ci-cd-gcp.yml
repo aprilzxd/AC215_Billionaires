@@ -19,7 +19,7 @@ jobs:
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v1
 
-      - name: Configure Docker for GCR
+      - name: Configure Docker for GCR (on host)
         run: gcloud auth configure-docker --quiet
 
       - name: Prepare secrets
@@ -47,6 +47,12 @@ jobs:
             -e GCP_PROJECT=unified-canyon-436117-q9 \
             -e GCP_ZONE=us-east1-c \
             billionaire-app-deployment -c "
+              # Authenticate inside the container
+              gcloud auth activate-service-account --key-file=/secrets/deployment.json
+              gcloud config set project $GCP_PROJECT
+              # Re-configure Docker auth inside this container environment
+              gcloud auth configure-docker gcr.io --quiet
+
               cd /workspace/src/deployment
               ansible-playbook deploy-docker-images.yml -i inventory.yml
               ansible-playbook deploy-setup-containers.yml -i inventory.yml
