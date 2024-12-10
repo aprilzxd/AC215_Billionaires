@@ -1,0 +1,44 @@
+name: Continuous Integration and Continuous Deployment
+
+on:
+  push:
+    branches: [ "milestone5" ]
+
+jobs:
+  deploy_app:
+    if: contains(github.event.head_commit.message, '/deploy-app')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - id: 'auth'
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Configure Docker Client for GCR
+        run: gcloud auth configure-docker --quiet
+
+      - name: Build deployment container
+        run: |
+          cd src/deployment
+          docker build -t cheese-app-deployment -f Dockerfile .
+
+      - name: Run Deploy App
+        run: |
+          docker run --rm --name cheese-app-deployment \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v $HOME/.ssh:/home/app/.ssh \
+            -v ${{ github.workspace }}/src/frontend:/src/frontend \
+            -v ${{ github.workspace }}/src/api-service:/src/api-service \
+            -v ${{ github.workspace }}/src/deployment:/src/deployment \
+            --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
+            --env GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
+            -e GCP_PROJECT=unified-canyon-436117-q9 \
+            -e GCP_ZONE=s-central1-a \
+            cheese-app-deployment sh deploy-k8s-update.sh
