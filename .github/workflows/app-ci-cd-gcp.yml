@@ -19,14 +19,13 @@ jobs:
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v1
 
-      - name: Configure Docker for GCR (on host)
+      - name: Configure Docker for GCR
         run: gcloud auth configure-docker --quiet
 
       - name: Prepare secrets
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh-key-deployment
           chmod 600 ssh-key-deployment
-          echo "${{ secrets.OPENAI_API_KEY }}" > openai_key.txt
 
       - name: Build deployment container
         run: |
@@ -41,7 +40,6 @@ jobs:
             -v ${{ github.workspace }}:/workspace \
             -v ${{ github.workspace }}/src/deployment/deployment.json:/secrets/deployment.json:ro \
             -v ${{ github.workspace }}/ssh-key-deployment:/secrets/ssh-key-deployment:ro \
-            -v ${{ github.workspace }}/openai_key.txt:/secrets/openai_key.txt:ro \
             -e ANSIBLE_HOST_KEY_CHECKING=False \
             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
             -e GCP_PROJECT=unified-canyon-436117-q9 \
@@ -49,8 +47,7 @@ jobs:
             billionaire-app-deployment -c "
               # Authenticate inside the container
               gcloud auth activate-service-account --key-file=/secrets/deployment.json
-              gcloud config set project $GCP_PROJECT
-              # Re-configure Docker auth inside this container environment
+              gcloud config set project \$GCP_PROJECT
               gcloud auth configure-docker gcr.io --quiet
 
               cd /workspace/src/deployment
