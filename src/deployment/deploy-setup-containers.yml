@@ -10,11 +10,11 @@
         path: "/srv/secrets"
         state: "directory"
         mode: 0755
-    - name: Copy service account key file
-      copy:
-        src: ../secrets/gcp-service.json
-        dest: "/srv/secrets/gcp-service.json"
-        mode: 0644
+    # - name: Copy service account key file
+    #   copy:
+    #     src: ../secrets/gcp-service.json
+    #     dest: "/srv/secrets/gcp-service.json"
+    #     mode: 0644
     - name: Authenticate gcloud using service account
       shell: "gcloud auth activate-service-account --key-file /srv/secrets/gcp-service.json"
     
