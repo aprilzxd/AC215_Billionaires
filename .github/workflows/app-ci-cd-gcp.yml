@@ -7,8 +7,10 @@ on:
 jobs:
   deploy_app:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository code
+        uses: actions/checkout@v4
 
       - name: Set up gcloud auth
         uses: google-github-actions/auth@v1
@@ -21,7 +23,7 @@ jobs:
       - name: Configure Docker for GCR
         run: gcloud auth configure-docker --quiet
 
-      # Create other secret files from GitHub secrets
+      # Prepare secrets
       - name: Prepare secrets
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh-key-deployment
@@ -33,7 +35,7 @@ jobs:
           cd src/deployment
           docker build -t billionaire-app-deployment -f Dockerfile .
 
-      - name: Run Deployment inside container
+      - name: Run Deployment (with debug)
         run: |
           docker run --rm --name billionaire-app-deployment \
             -v /var/run/docker.sock:/var/run/docker.sock \
@@ -45,8 +47,20 @@ jobs:
             -e GCP_PROJECT=unified-canyon-436117-q9 \
             -e GCP_ZONE=us-east1-c \
             billionaire-app-deployment bash -c "
-              cd /app/src/deployment && \
-              ansible-playbook -vvv deploy-docker-images.yml -i inventory.yml && \
-              ansible-playbook -vvv deploy-setup-containers.yml -i inventory.yml && \
+              set -x
+              cd /app/src/deployment
+              echo '--- DEBUG: Listing directory contents ---'
+              ls -al
+              echo '--- DEBUG: Showing inventory.yml ---'
+              cat inventory.yml
+              echo '--- DEBUG: Testing Ansible Inventory ---'
+              ansible-inventory -i inventory.yml --list
+              echo '--- DEBUG: Checking SSH connectivity with ansible ping ---'
+              ansible -i inventory.yml appserver -m ping -vvv
+              echo '--- DEBUG: Running deploy-docker-images.yml ---'
+              ansible-playbook -vvv deploy-docker-images.yml -i inventory.yml
+              echo '--- DEBUG: Running deploy-setup-containers.yml ---'
+              ansible-playbook -vvv deploy-setup-containers.yml -i inventory.yml
+              echo '--- DEBUG: Running deploy-setup-webserver.yml ---'
               ansible-playbook -vvv deploy-setup-webserver.yml -i inventory.yml
             "
