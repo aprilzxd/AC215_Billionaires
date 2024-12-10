@@ -1,3 +1,9 @@
+name: CI CD for Billionaire App
+
+on:
+  push:
+    branches: [ "milestone5" ]
+
 jobs:
   deploy_app:
     runs-on: ubuntu-latest
