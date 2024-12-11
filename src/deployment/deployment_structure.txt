@@ -1,0 +1,19 @@
+.
+├── Dockerfile
+├── api-deployment.yaml
+├── deploy-create-instance.yml
+├── deploy-docker-images.yml
+├── deploy-provision-instance.yml
+├── deploy-setup-containers.yml
+├── deploy-setup-webserver.yml
+├── deployment.json
+├── deployment_structure.txt
+├── docker-entrypoint.sh
+├── docker-shell.sh
+├── frontend-deployment.yaml
+├── inventory.yml
+├── nginx
+│   └── nginx.conf
+└── secret.yaml
+
+2 directories, 15 files
