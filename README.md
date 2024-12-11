@@ -1,13 +1,10 @@
-# AC215 - Billionaire Secretary
+# AC215 - Billionaires AI 
 
 **Team Members:** Huandong Chang, Mingyuan Ma, Lance Lu, April Zhang
 
 **Group Name:** Billionaires
 
 **Project:** In this project, we aim to develop a platform that automatically connects to a financial database, scrapes data from various online sources, provides analytical and visualization tools, and allows for natural language querying through a chatbot interface. This project aims to reduce the rigidity and repetition in traditional data analysis workflows by providing a more dynamic and automated approach to financial data processing and visualization.
-
-## Milestone2
-In this milestone, we implement the components for data management and versioning, model finetuning, and agents.
 
 ### Data
 Our data is [reddit_finance_43_250k](https://huggingface.co/datasets/winddude/reddit_finance_43_250k), a collection of 250k post/comment pairs from 43 financial, investing and crypto subreddits. Post must have all been text, with a length of 250 chars, and a positive score. Each subreddit is narrowed down to the 70th qunatile before being mergered with their top 3 comments and than the other subs. Further score-based methods are used to select the top 250k post/comment pairs. We stored this 680MB dataset in a private Google Cloud Bucket under the `raw/` folder as `top.jsonl`.
@@ -21,7 +18,6 @@ Under the folder `src/datapipeline`, the following files construct our data pipe
 2. **`preprocess.py`:** process the raw `top.jsonl` file to produce new train and test sets locally. Use a command line argument to specify the sample size. For example, running `python preprocess.py 500` will locally generate new train and test sets `train.jsonl` and `test.jsonl` totaling 500 rows.
 3. **`upload.py`:** uploads the local train and test sets into the Google Cloud Bucket. For example, running `python upload.py reddit_500` will upload the local `train.jsonl` and `test.jsonl` files into the `reddit_500` folder in the bucket.
 
-## Milestone4
 ### Application Design Document
 ![design_graph](assets/solution_architecture.png)
 ![tech_graph](assets/technical_structure.png)
@@ -51,7 +47,6 @@ The `API_KEY` is securely managed through GitHub Secrets. It is automatically in
 The tests are written using `PyTest`. For developers to replicate test results locally, run `sh docker-shell.sh` in the root directory and find the coverage report in `htmlcov/index.html`.
 ![coverage_report](assets/coverage_report.jpg)
 
-## Milestone5
 ### ML Workflow
 ML Workflow allows users to to conduct data collection, data processing, and model finetuning with a single click. Under src/workflow, run `bash docker-shell.sh` and then run `python cli.py` to start the ml workflow.
 ![ml_workflow_demo](assets/ml_workflow.png)
