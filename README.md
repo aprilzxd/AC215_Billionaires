@@ -104,7 +104,6 @@ Ensure the following environment variables are set:
    ```
 
 #### **Kubernetes Setup:**
-
 1. **Deploy API Service**
 
    Apply the Kubernetes deployment and service configuration:
@@ -144,11 +143,37 @@ Ensure the following environment variables are set:
 - Modify the `GCP_PROJECT` and `GCP_ZONE` variables in your scripts if deploying to GKE.
 - The `docker-entrypoint.sh` script in the API service ensures the application runs on the specified port.
 
+### Usage Details and Examples
+Our project leverages the phidata framework to create agents equipped with memory, knowledge, tools, and reasoning. By connecting with reliable real-time data sources like Yahoo Finance, the chatbot offers robust capabilities to address diverse user needs.
+
+Here are some examples of what our chatbot can do:
+1. **Get Real-Time News**
+   
+   Users can request the latest news on a specific company or field. The chatbot provides:
+   * Summaries of key developments
+   * Direct links to full articles
+   * Relevant images for visual context
+2. **Analyze Stock Prices**
+
+   Users can query real-time or historical stock data. Key features include:
+   * Trajectories of historical stock prices for multiple companies
+   * Interactive plots, allowing users to zoom and hover for precise data points
+3. **Receive Portfolio Advice**
+
+   Personalized financial advice tailored to user preferences and budget:
+   * Suggested portfolio allocations
+   * Clear, concise explanations of investment recommendations
+4. **Email Reports**
+
+   Registered users can request a curated report summarizing all or part of their chatbot conversation, conveniently delivered to their email.
+
+By combining intelligent automation with real-time data and personalization, our tool bridges the gap between technical insights and user-friendly interactions.
+
 ### Known Issues and Limitations
 #### **User Interface (UI):**
 - The current UI lacks certain user-friendly features such as:
-  - A detailed user manual.
-  - Chat history functionality.
+  - A detailed user manual
+  - Chat history functionality
 - Improvements in these areas are needed to enhance user experience.
 
 #### **External API Integration:**
@@ -157,6 +182,6 @@ Ensure the following environment variables are set:
 
 #### **Limited Functionalities:**
 - The tool currently does not include:
-  - A dashboard for data visualization.
-  - Tools for portfolio return tracking.
+  - A dashboard for data visualization
+  - Tools for portfolio return tracking
 - Expanding these features will improve the tool's versatility and usability.
