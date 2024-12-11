@@ -54,3 +54,21 @@ The tests are written using `PyTest`. For developers to replicate test results l
 ### ML Workflow
 ML Workflow allows users to to conduct data collection, data processing, and model finetuning with a single click. Under src/workflow, run `bash docker-shell.sh` and then run `python cli.py` to start the ml workflow.
 ![ml_workflow_demo](ml_workflow.png)
+
+
+## Known Issues and Limitations
+### User Interface (UI)
+- The current UI lacks certain user-friendly features such as:
+  - A detailed user manual.
+  - Chat history functionality.
+- Improvements in these areas are needed to enhance user experience.
+
+### External API Integration
+- Institutions are hesitant to share their APIs and data directly with OpenAI.
+- A secure and reliable mechanism for integrating external APIs is required to build trust and ensure seamless interoperability.
+
+### Limited Functionalities
+- The tool currently does not include:
+  - A dashboard for data visualization.
+  - Tools for portfolio return tracking.
+- Expanding these features will improve the tool's versatility and usability.
