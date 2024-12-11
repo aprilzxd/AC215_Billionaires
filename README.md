@@ -24,7 +24,7 @@ Under the folder `src/datapipeline`, the following files construct our data pipe
 ## Milestone4
 ### Application Design Document
 ![design_graph](assets/solution_architecture.png)
-![tech_graph](assets/technical_architecture.png)
+![tech_graph](assets/technical_structure.png)
 
 
 ### Frontend
