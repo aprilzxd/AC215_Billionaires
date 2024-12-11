@@ -10,6 +10,12 @@
         state: "directory"
         mode: 0755
 
+    - name: Copy service account key file to remote VM
+      copy:
+        src: /secrets/deployment.json
+        dest: /srv/secrets/deployment.json
+        mode: 0644
+
     - name: Authenticate gcloud using service account
       shell: "gcloud auth activate-service-account --key-file /srv/secrets/deployment.json"
 
