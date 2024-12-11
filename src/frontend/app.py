@@ -13,7 +13,7 @@ st.set_page_config(
     page_title="Billionaires AI.",
     page_icon=":moneybag:",
 )
-st.title("Billionaires AI -- Please tell me it magically works.")
+st.title("Billionaires AI -- 我求你了.")
 
 initialize_session()
 display_messages(st.session_state.messages)
