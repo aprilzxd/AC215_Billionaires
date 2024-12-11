@@ -11,7 +11,7 @@
         mode: 0755
 
     - name: Authenticate gcloud using service account
-      shell: "gcloud auth activate-service-account --key-file /secrets/deployment.json"
+      shell: "gcloud auth activate-service-account --key-file /srv/secrets/deployment.json"
 
     - name: Create network
       community.docker.docker_network:
