@@ -16,7 +16,7 @@ Our data is [reddit_finance_43_250k](https://huggingface.co/datasets/winddude/re
 Our Dockerfiles all follow the standard convention. Run the containers for each component with `sh docker-shell.sh`. For the gemini-finertuner container, Windows users may need to run `bash docker-shell.sh` instead.
 
 ### Data Pipeline
-Under **`src/datapipeline`:**
+Under the folder `src/datapipeline`, the following files construct our data pipeline:
 1. **`dataloader.py`:** downloads raw/processed data from the Google Cloud Bucket. Use a command line argument to specify the folder to download from. For example, running `python dataloader.py raw` will download the raw `raw/top.jsonl` file, and running `python dataloader.py reddit_500` will download the processed train and test sets `reddit_500/train.jsonl` and `reddit_500/test.jsonl` totaling 500 rows if they already exist in the bucket.
 2. **`preprocess.py`:** process the raw `top.jsonl` file to produce new train and test sets locally. Use a command line argument to specify the sample size. For example, running `python preprocess.py 500` will locally generate new train and test sets `train.jsonl` and `test.jsonl` totaling 500 rows.
 3. **`upload.py`:** uploads the local train and test sets into the Google Cloud Bucket. For example, running `python upload.py reddit_500` will upload the local `train.jsonl` and `test.jsonl` files into the `reddit_500` folder in the bucket.
@@ -25,7 +25,7 @@ Under **`src/datapipeline`:**
 ### Application Design Document
 ![design_graph](architecture.png)
 
-### Front end
+### Frontend
 Inside `\src\api-service`, run `sh docker-shell.sh` to launch the backend API host. Then, inside `src\frontend`, run `sh docker-shell.sh` to launch the frontend host. The frontend will be running at [http://localhost:8501](http://localhost:8501).
 
 ### Continuous Integration Setup
@@ -45,36 +45,29 @@ Steps:
 Secrets Management
 The `API_KEY` is securely managed through GitHub Secrets. It is automatically injected into the environment during CI.
 
-### Test Documentation:
+### Testing
 The tests are written using `PyTest`. For developers to replicate test results locally, run `sh docker-shell.sh` in the root directory and find the coverage report in `htmlcov/index.html`.
 ![coverage_report](coverage_report.jpg)
-
 
 ## Milestone5
 ### ML Workflow
 ML Workflow allows users to to conduct data collection, data processing, and model finetuning with a single click. Under src/workflow, run `bash docker-shell.sh` and then run `python cli.py` to start the ml workflow.
 ![ml_workflow_demo](ml_workflow.png)
 
-## Prerequisites and setup instructions.
-
+### Setup Instructions
+#### **Prerequisites:**
 Before you begin, ensure you have the following installed on your machine:
+- **Docker:** To build and run containers locally.
+- **Kubernetes:** To deploy containers in a cluster environment.
+- **kubectl:** Command-line tool for controlling Kubernetes clusters.
+- **Google Cloud SDK:** If deploying to Google Kubernetes Engine (GKE).
+- **Pipenv:** For managing Python dependencies.
 
-- **Docker**: To build and run containers locally.
-- **Kubernetes**: To deploy containers in a cluster environment.
-- **kubectl**: Command-line tool for controlling Kubernetes clusters.
-- **Google Cloud SDK**: If deploying to Google Kubernetes Engine (GKE).
-- **Pipenv**: For managing Python dependencies.
-
-## Setup Instructions
-
-### Environment Variables
-
+#### **Environment Variables:**
 Ensure the following environment variables are set:
-
 - `OPENAI_API_KEY`: Your OpenAI API key, stored in a file at `../../../secrets/openai_key.txt`.
 
-### Docker Setup
-
+#### **Docker Setup:**
 1. **Build Docker Images**
 
    Navigate to the respective directories and build the Docker images:
@@ -110,7 +103,7 @@ Ensure the following environment variables are set:
    docker run --rm --network my-network --name frontend -it -p 8501:8501 frontend
    ```
 
-### Kubernetes Setup
+#### **Kubernetes Setup:**
 
 1. **Deploy API Service**
 
@@ -137,37 +130,32 @@ Ensure the following environment variables are set:
    kubectl get services
    ```
 
-## Deployment Instructions
+### Deployment Instructions
+#### **Docker Deployment:**
+1. Ensure Docker is running.
+2. Follow the Docker setup instructions above to build and run the containers.
 
-### Docker Deployment
+#### **Kubernetes Deployment:**
+1. Ensure your Kubernetes cluster is running and `kubectl` is configured to interact with it.
+2. Follow the Kubernetes setup instructions  above to deploy the services.
 
-- Ensure Docker is running.
-- Follow the Docker setup instructions to build and run the containers.
-
-### Kubernetes Deployment
-
-- Ensure your Kubernetes cluster is running and `kubectl` is configured to interact with it.
-- Follow the Kubernetes setup instructions to deploy the services.
-
-## Notes
-
+#### **Notes:**
 - Ensure that your `secrets` directory is correctly set up and accessible.
 - Modify the `GCP_PROJECT` and `GCP_ZONE` variables in your scripts if deploying to GKE.
 - The `docker-entrypoint.sh` script in the API service ensures the application runs on the specified port.
 
-
-## Known Issues and Limitations
-### User Interface (UI)
+### Known Issues and Limitations
+#### **User Interface (UI):**
 - The current UI lacks certain user-friendly features such as:
   - A detailed user manual.
   - Chat history functionality.
 - Improvements in these areas are needed to enhance user experience.
 
-### External API Integration
+#### **External API Integration:**
 - Institutions are hesitant to share their APIs and data directly with OpenAI.
 - A secure and reliable mechanism for integrating external APIs is required to build trust and ensure seamless interoperability.
 
-### Limited Functionalities
+#### **Limited Functionalities:**
 - The tool currently does not include:
   - A dashboard for data visualization.
   - Tools for portfolio return tracking.
