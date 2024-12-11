@@ -55,6 +55,106 @@ The tests are written using `PyTest`. For developers to replicate test results l
 ML Workflow allows users to to conduct data collection, data processing, and model finetuning with a single click. Under src/workflow, run `bash docker-shell.sh` and then run `python cli.py` to start the ml workflow.
 ![ml_workflow_demo](ml_workflow.png)
 
+## Prerequisites and setup instructions.
+
+Before you begin, ensure you have the following installed on your machine:
+
+- **Docker**: To build and run containers locally.
+- **Kubernetes**: To deploy containers in a cluster environment.
+- **kubectl**: Command-line tool for controlling Kubernetes clusters.
+- **Google Cloud SDK**: If deploying to Google Kubernetes Engine (GKE).
+- **Pipenv**: For managing Python dependencies.
+
+## Setup Instructions
+
+### Environment Variables
+
+Ensure the following environment variables are set:
+
+- `OPENAI_API_KEY`: Your OpenAI API key, stored in a file at `../../../secrets/openai_key.txt`.
+
+### Docker Setup
+
+1. **Build Docker Images**
+
+   Navigate to the respective directories and build the Docker images:
+
+   ```bash
+   # For API Service
+   cd src/api-service
+   docker build -t api-service -f Dockerfile .
+
+   # For Frontend
+   cd src/frontend
+   docker build -t frontend -f Dockerfile .
+   ```
+
+2. **Run Docker Containers**
+
+   Ensure the Docker network is created:
+
+   ```bash
+   docker network create my-network
+   ```
+
+   Run the containers:
+
+   ```bash
+   # For API Service
+   docker run --rm --network my-network --name api-service -p 8001:8001 \
+     -v "$(pwd)/../../../secrets":/run/secrets/openai_key:ro \
+     -e OPENAI_API_KEY=$(cat ../../../secrets/openai_key.txt) \
+     api-service
+
+   # For Frontend
+   docker run --rm --network my-network --name frontend -it -p 8501:8501 frontend
+   ```
+
+### Kubernetes Setup
+
+1. **Deploy API Service**
+
+   Apply the Kubernetes deployment and service configuration:
+
+   ```bash
+   kubectl apply -f src/deployment/api-deployment.yaml
+   ```
+
+2. **Deploy Frontend**
+
+   Apply the Kubernetes deployment and service configuration:
+
+   ```bash
+   kubectl apply -f src/deployment/frontend-deployment.yaml
+   ```
+
+3. **Verify Deployments**
+
+   Check the status of your deployments:
+
+   ```bash
+   kubectl get deployments
+   kubectl get services
+   ```
+
+## Deployment Instructions
+
+### Docker Deployment
+
+- Ensure Docker is running.
+- Follow the Docker setup instructions to build and run the containers.
+
+### Kubernetes Deployment
+
+- Ensure your Kubernetes cluster is running and `kubectl` is configured to interact with it.
+- Follow the Kubernetes setup instructions to deploy the services.
+
+## Notes
+
+- Ensure that your `secrets` directory is correctly set up and accessible.
+- Modify the `GCP_PROJECT` and `GCP_ZONE` variables in your scripts if deploying to GKE.
+- The `docker-entrypoint.sh` script in the API service ensures the application runs on the specified port.
+
 
 ## Known Issues and Limitations
 ### User Interface (UI)
