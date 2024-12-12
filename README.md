@@ -6,15 +6,12 @@
 
 **Project:** In this project, we aim to develop a platform that automatically connects to a financial database, scrapes data from various online sources, provides analytical and visualization tools, and allows for natural language querying through a chatbot interface. This project aims to reduce the rigidity and repetition in traditional data analysis workflows by providing a more dynamic and automated approach to financial data processing and visualization.
 
-## Application Design Document
+## Application Design Documents
 ![design_graph](assets/solution_architecture.png)
 ![tech_graph](assets/technical_structure.png)
 
-## Frontend
-Inside `\src\api-service`, run `sh docker-shell.sh` to launch the backend API host. Then, inside `src\frontend`, run `sh docker-shell.sh` to launch the frontend host. The frontend will be running at [http://localhost:8501](http://localhost:8501).
-
-## Continuous Integration Setup
-CI is triggered on every push or pull request to the milestone4_CI_test branch.
+## Continuous Integration
+CI is triggered on every push or pull request to the main branch.
 Steps:
 * Check out the code.
 * Set up Docker Buildx and cache layers for efficiency.
@@ -27,8 +24,7 @@ Steps:
 * Upload the test coverage report.
 * Tear down Docker containers after tests.
 
-Secrets Management
-The `API_KEY` is securely managed through GitHub Secrets. It is automatically injected into the environment during CI.
+**Secrets Management:** The `API_KEY` is securely managed through GitHub Secrets. It is automatically injected into the environment during CI.
 
 ## ML Workflow
 ML Workflow allows users to to conduct data collection, data processing, and model finetuning with a single click. Under src/workflow, run `bash docker-shell.sh` and then run `python cli.py` to start the ml workflow.
@@ -47,44 +43,18 @@ Before you begin, ensure you have the following installed on your machine:
 Ensure the following environment variables are set:
 * `OPENAI_API_KEY`: Your OpenAI API key, stored in a file at `../../../secrets/openai_key.txt`.
 
-### Docker Setup
-1. **Build Docker Images**
+### Docker Setups to Run the Tool Locally
+1. Ensure Docker is running.
+2. Inside `\src\api-service`, run `sh docker-shell.sh` to launch the backend API host. 
+3. Inside `src\frontend`, run `sh docker-shell.sh` to launch the frontend host. The frontend will be running at [http://localhost:8501](http://localhost:8501).
 
-   Navigate to the respective directories and build the Docker images:
+## Deployment Instructions
+### Continuous Deployment
+Any code commit changing existing functionalities will be automatically deployed through continuous deployment. For manual deployment, refer to the following guide on Kubernetes deployment.
 
-   ```bash
-   # For API Service
-   cd src/api-service
-   docker build -t api-service -f Dockerfile .
-
-   # For Frontend
-   cd src/frontend
-   docker build -t frontend -f Dockerfile .
-   ```
-
-2. **Run Docker Containers**
-
-   Ensure the Docker network is created:
-
-   ```bash
-   docker network create my-network
-   ```
-
-   Run the containers:
-
-   ```bash
-   # For API Service
-   docker run --rm --network my-network --name api-service -p 8001:8001 \
-     -v "$(pwd)/../../../secrets":/run/secrets/openai_key:ro \
-     -e OPENAI_API_KEY=$(cat ../../../secrets/openai_key.txt) \
-     api-service
-
-   # For Frontend
-   docker run --rm --network my-network --name frontend -it -p 8501:8501 frontend
-   ```
-
-### Kubernetes Setup
-1. **Deploy API Service**
+### Kubernetes Deployment
+1. Ensure your Kubernetes cluster is running and `kubectl` is configured to interact with it.
+2. **Deploy API Service**
 
    Apply the Kubernetes deployment and service configuration:
 
@@ -92,7 +62,7 @@ Ensure the following environment variables are set:
    kubectl apply -f src/deployment/api-deployment.yaml
    ```
 
-2. **Deploy Frontend**
+3. **Deploy Frontend**
 
    Apply the Kubernetes deployment and service configuration:
 
@@ -100,7 +70,7 @@ Ensure the following environment variables are set:
    kubectl apply -f src/deployment/frontend-deployment.yaml
    ```
 
-3. **Verify Deployments**
+4. **Verify Deployments**
 
    Check the status of your deployments:
 
@@ -108,15 +78,6 @@ Ensure the following environment variables are set:
    kubectl get deployments
    kubectl get services
    ```
-
-## Deployment Instructions
-### Docker Deployment
-1. Ensure Docker is running.
-2. Follow the Docker setup instructions above to build and run the containers.
-
-### Kubernetes Deployment
-1. Ensure your Kubernetes cluster is running and `kubectl` is configured to interact with it.
-2. Follow the Kubernetes setup instructions  above to deploy the services.
 
 ### Notes
 * Ensure that your `secrets` directory is correctly set up and accessible.
@@ -166,18 +127,16 @@ By combining intelligent automation with real-time data and personalization, our
   * Tools for portfolio return tracking
 * Expanding these features will improve the tool's versatility and usability.
 
-## Data
+## Appendix
+### Data
 Our data is [reddit_finance_43_250k](https://huggingface.co/datasets/winddude/reddit_finance_43_250k), a collection of 250k post/comment pairs from 43 financial, investing and crypto subreddits. Post must have all been text, with a length of 250 chars, and a positive score. Each subreddit is narrowed down to the 70th qunatile before being mergered with their top 3 comments and than the other subs. Further score-based methods are used to select the top 250k post/comment pairs. We stored this 680MB dataset in a private Google Cloud Bucket under the `raw/` folder as `top.jsonl`.
 
-## Containers
-Our Dockerfiles all follow the standard convention. Run the containers for each component with `sh docker-shell.sh`. For the gemini-finertuner container, Windows users may need to run `bash docker-shell.sh` instead.
-
-## Data Pipeline
+### Data Pipeline
 Under the folder `src/datapipeline`, the following files construct our data pipeline:
 1. **`dataloader.py`:** downloads raw/processed data from the Google Cloud Bucket. Use a command line argument to specify the folder to download from. For example, running `python dataloader.py raw` will download the raw `raw/top.jsonl` file, and running `python dataloader.py reddit_500` will download the processed train and test sets `reddit_500/train.jsonl` and `reddit_500/test.jsonl` totaling 500 rows if they already exist in the bucket.
 2. **`preprocess.py`:** process the raw `top.jsonl` file to produce new train and test sets locally. Use a command line argument to specify the sample size. For example, running `python preprocess.py 500` will locally generate new train and test sets `train.jsonl` and `test.jsonl` totaling 500 rows.
 3. **`upload.py`:** uploads the local train and test sets into the Google Cloud Bucket. For example, running `python upload.py reddit_500` will upload the local `train.jsonl` and `test.jsonl` files into the `reddit_500` folder in the bucket.
 
-## Testing
+### Testing
 The tests are written using `PyTest`. For developers to replicate test results locally, run `sh docker-shell.sh` in the root directory and find the coverage report in `htmlcov/index.html`.
 ![coverage_report](assets/coverage_report.jpg)
