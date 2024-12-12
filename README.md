@@ -139,4 +139,3 @@ Under the folder `src/datapipeline`, the following files construct our data pipe
 
 ### Testing
 The tests are written using `PyTest`. For developers to replicate test results locally, run `sh docker-shell.sh` in the root directory and find the coverage report in `htmlcov/index.html`.
-![coverage_report](assets/coverage_report.jpg)
