@@ -89,18 +89,18 @@ Our project leverages the phidata framework to create agents equipped with memor
 
 Here are some examples of what our chatbot can do:
 1. **Get Real-Time News**
-   
+   ![get_news_demo](assets/demo_news.png)
    Users can request the latest news on a specific company or field. The chatbot provides:
    * Summaries of key developments
    * Direct links to full articles
    * Relevant images for visual context
 2. **Analyze Stock Prices**
-
+   ![analyze_stock_demo](assets/demo_stock.png)
    Users can query real-time or historical stock data. Key features include:
    * Trajectories of historical stock prices for multiple companies
    * Interactive plots, allowing users to zoom and hover for precise data points
 3. **Receive Portfolio Advice**
-
+   ![portfolio_demo](assets/demo_portfolio.png)
    Personalized financial advice tailored to user preferences and budget:
    * Suggested portfolio allocations
    * Clear, concise explanations of investment recommendations
