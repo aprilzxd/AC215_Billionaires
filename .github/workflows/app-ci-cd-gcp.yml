@@ -2,7 +2,7 @@ name: CI CD for Billionaire App
 
 on:
   push:
-    branches: [ "milestone5" ]
+    branches: [ "main" ]
 
 jobs:
   Explore-GitHub-Actions:
