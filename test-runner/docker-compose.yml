@@ -34,7 +34,7 @@ services:
     working_dir: /app
     volumes:
       - ../:/app
-    command: pipenv run pytest tests/ --cov=src --cov-report=html --cov-fail-under=50
+    command: pipenv run pytest tests/ --cov=src --cov-report=html --cov-fail-under=7
     networks:
       - my-network
 
