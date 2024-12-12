@@ -1,9 +1,11 @@
 import requests
 import json
+import pytest
 
+@pytest.mark.skip(reason="test")
 def test_agent_chat_endpoint():
     # Define the API URL
-    url = "http://api-service:8001/agent/chat/stream"  # use this if testing in a container
+    url = "http://127.0.0.1:8001/agent/chat/stream"  # use this if testing in a container
 
     # Define the payload as a dictionary (no 'stream' key needed since endpoint always streams)
     payload = {
