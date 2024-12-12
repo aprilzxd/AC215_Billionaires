@@ -14,7 +14,7 @@
 Inside `\src\api-service`, run `sh docker-shell.sh` to launch the backend API host. Then, inside `src\frontend`, run `sh docker-shell.sh` to launch the frontend host. The frontend will be running at [http://localhost:8501](http://localhost:8501).
 
 ## Continuous Integration Setup
-CI is triggered on every push or pull request to the milestone4_CI_test branch.
+CI is triggered on every push or pull request to the main branch.
 Steps:
 * Check out the code.
 * Set up Docker Buildx and cache layers for efficiency.
