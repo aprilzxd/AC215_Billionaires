@@ -4,6 +4,8 @@
 
 **Group Name:** Billionaires
 
+**Medium Blog Post** [Billionairs.AI: Your Personal Financial Assistant](https://medium.com/@HuandongChang0527/billionairs-ai-your-personal-financial-assistant-6aac1147a697)
+
 **Project:** In this project, we aim to develop a platform that automatically connects to a financial database, scrapes data from various online sources, provides analytical and visualization tools, and allows for natural language querying through a chatbot interface. This project aims to reduce the rigidity and repetition in traditional data analysis workflows by providing a more dynamic and automated approach to financial data processing and visualization.
 
 ## Application Design Documents
